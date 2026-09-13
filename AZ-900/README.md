@@ -9,7 +9,7 @@ This repo is the free, clonable companion to the paid course — students deploy
 ```
 book/           The sellable AZ-900 study guide, structured chapter-for-chapter against
                 Microsoft's official skills outline. See book/README.md.
-labs/           Seven hands-on labs, one per major exam domain/sub-objective. Each has
+labs/           Nine hands-on labs, one per major exam domain/sub-objective. Each has
                 main.bicep + README.md with deploy/verify/cleanup commands and instructor
                 talking points.
 walkthroughs/   Guided walkthroughs tied to specific labs/modules (portal tours, alert-rule
@@ -28,10 +28,12 @@ docs/           Skills-alignment map (domain -> chapter -> lab) and supporting r
 | 5 | [Budgets & Cost Alerts](labs/05-budgets-cost-alerts/) | Pricing, SLA & Lifecycle | $0 |
 | 6 | [App Service (PaaS)](labs/06-app-service-paas/) | Cloud Concepts — IaaS/PaaS/SaaS | ~$0 |
 | 7 | [Resource Locks & Monitor Alerts](labs/07-resource-locks-monitor-alerts/) | Azure Management & Governance | ~$0 |
+| 8 | [Azure Policy](labs/08-azure-policy/) | Azure Management & Governance | $0 |
+| 9 | [Virtual Machine Basics](labs/09-virtual-machine/) | Azure Architecture & Services — Compute | ~$0.01–0.05 |
 
-Every lab uses only Free-tier or inherently-free resources, and every README ends with a cleanup step — run it right after each demo so nothing lingers on a bill. Lab 7 has an extra cleanup step (removing its resource lock) before the resource group will delete — see that lab's README.
+Every lab is free or near-free, **except Lab 9**, which deploys a real billable VM (still trivially cheap for a short demo, but the only lab in this repo that isn't $0). Every README ends with a cleanup step — run it right after each demo so nothing lingers on a bill. Lab 7 has an extra cleanup step (removing its resource lock) before the resource group will delete, and Lab 8's cleanup must delete the policy assignment before the policy definition — see those labs' READMEs.
 
-Lab 7 also has a companion portal walkthrough: [`walkthroughs/07-resource-locks-monitor-alerts/`](walkthroughs/07-resource-locks-monitor-alerts/).
+Labs 7 and 8 also have companion portal walkthroughs: [`walkthroughs/07-resource-locks-monitor-alerts/`](walkthroughs/07-resource-locks-monitor-alerts/) and [`walkthroughs/08-azure-policy/`](walkthroughs/08-azure-policy/).
 
 ## Prerequisites
 

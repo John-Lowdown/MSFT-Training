@@ -5,6 +5,9 @@ This folder holds guided walkthroughs that support a course module but don't nee
 ## Built
 
 - [`07-resource-locks-monitor-alerts/`](07-resource-locks-monitor-alerts/) — portal-first walkthrough of [Lab 7](../labs/07-resource-locks-monitor-alerts/): finding and testing the resource lock, reading the Monitor alert rule's configuration, cleanup. Ends with a "What you learned" summary.
+- [`08-azure-policy/`](08-azure-policy/) — portal-first walkthrough of [Lab 8](../labs/08-azure-policy/): reading the policy definition's JSON, watching the Compliance tab lag behind an instant deny, and comparing `Deny` vs. `Audit` effects side by side. Ends with a "What you learned" summary.
+
+No dedicated walkthrough for Lab 9 (Virtual Machine) — beyond SSH'ing in, there isn't much the portal shows that the lab's own CLI verify steps don't already cover. Add one if that changes (e.g., if the lab grows to demonstrate Azure Bastion or VM extensions).
 
 ## Planned
 

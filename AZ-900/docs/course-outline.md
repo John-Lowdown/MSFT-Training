@@ -19,7 +19,7 @@ Master alignment map for this repo's AZ-900 book and video course, matching Micr
 | Sub-objective | Book chapter | Video module (legacy) | Lab/walkthrough |
 |---|---|---|---|
 | Core architectural components of Azure | [Ch 4](../book/manuscript/04-core-architecture.md) | Module 4 (Management Tools) | Lab 1 (Resource Groups & Tagging) |
-| Azure compute and networking services | [Ch 5](../book/manuscript/05-compute-networking.md) | Module 3 (Core Azure Services) | Lab 3 (VNet & NSG), Lab 6 (App Service) |
+| Azure compute and networking services | [Ch 5](../book/manuscript/05-compute-networking.md) | Module 3 (Core Azure Services) | Lab 3 (VNet & NSG), Lab 6 (App Service), Lab 9 (Virtual Machine) |
 | Azure storage services | [Ch 6](../book/manuscript/06-storage-services.md) | Module 3 | Lab 2 (Storage Redundancy) |
 | Azure identity, access, and security | [Ch 7](../book/manuscript/07-identity-access-security.md) | Module 5 (Security, Privacy, Compliance) | Lab 3 (NSGs), Lab 4 (RBAC) |
 
@@ -28,8 +28,8 @@ Master alignment map for this repo's AZ-900 book and video course, matching Micr
 | Sub-objective | Book chapter | Video module (legacy) | Lab/walkthrough |
 |---|---|---|---|
 | Cost management in Azure | [Ch 8](../book/manuscript/08-cost-management.md) | Module 6 (Pricing & SLAs) | Lab 5 (Budgets & Cost Alerts), Pricing Calculator walkthrough |
-| Governance and compliance tools | [Ch 9](../book/manuscript/09-governance-compliance.md) | Module 5 | Lab 1 (Tagging), Lab 4 (RBAC), Lab 7 (Resource Locks) |
-| Managing and deploying Azure resources | [Ch 10](../book/manuscript/10-managing-deploying-resources.md) | Module 4 | All 7 labs (CLI/Bicep); Portal-vs-CLI-vs-Bicep walkthrough |
+| Governance and compliance tools | [Ch 9](../book/manuscript/09-governance-compliance.md) | Module 5 | Lab 1 (Tagging), Lab 4 (RBAC), Lab 7 (Resource Locks), Lab 8 (Azure Policy) |
+| Managing and deploying Azure resources | [Ch 10](../book/manuscript/10-managing-deploying-resources.md) | Module 4 | All 9 labs (CLI/Bicep); Portal-vs-CLI-vs-Bicep walkthrough |
 | Monitoring tools in Azure | [Ch 11](../book/manuscript/11-monitoring-tools.md) | Module 6 | Lab 7 (Resource Locks & Monitor Alerts) — no longer conceptual-only |
 
 ---
