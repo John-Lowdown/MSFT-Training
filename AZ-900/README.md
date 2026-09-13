@@ -33,7 +33,7 @@ docs/           Skills-alignment map (domain -> chapter -> lab) and supporting r
 
 Every lab is free or near-free, **except Lab 9**, which deploys a real billable VM (still trivially cheap for a short demo, but the only lab in this repo that isn't $0). Every README ends with a cleanup step — run it right after each demo so nothing lingers on a bill. Lab 7 has an extra cleanup step (removing its resource lock) before the resource group will delete, and Lab 8's cleanup must delete the policy assignment before the policy definition — see those labs' READMEs.
 
-Labs 7 and 8 also have companion portal walkthroughs: [`walkthroughs/07-resource-locks-monitor-alerts/`](walkthroughs/07-resource-locks-monitor-alerts/) and [`walkthroughs/08-azure-policy/`](walkthroughs/08-azure-policy/).
+Every lab except Lab 9 has a companion portal walkthrough under [`walkthroughs/`](walkthroughs/) — see that folder's README for the full list. Each assumes the lab is already deployed and tours what it built directly in the Azure Portal, ending with a "What you learned" summary.
 
 ## Prerequisites
 
