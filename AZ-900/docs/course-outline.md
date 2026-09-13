@@ -27,10 +27,10 @@ Master alignment map for this repo's AZ-900 book and video course, matching Micr
 
 | Sub-objective | Book chapter | Video module (legacy) | Lab/walkthrough |
 |---|---|---|---|
-| Cost management in Azure | [Ch 8](../book/manuscript/08-cost-management.md) | Module 6 (Pricing & SLAs) | Lab 5 (Budgets & Cost Alerts), Pricing/TCO Calculator walkthrough |
-| Governance and compliance tools | [Ch 9](../book/manuscript/09-governance-compliance.md) | Module 5 | Lab 1 (Tagging), Lab 4 (RBAC) |
-| Managing and deploying Azure resources | [Ch 10](../book/manuscript/10-managing-deploying-resources.md) | Module 4 | All 6 labs (CLI/Bicep); Portal-vs-CLI-vs-Bicep walkthrough |
-| Monitoring tools in Azure | [Ch 11](../book/manuscript/11-monitoring-tools.md) | *(not previously covered)* | — (conceptual only) |
+| Cost management in Azure | [Ch 8](../book/manuscript/08-cost-management.md) | Module 6 (Pricing & SLAs) | Lab 5 (Budgets & Cost Alerts), Pricing Calculator walkthrough |
+| Governance and compliance tools | [Ch 9](../book/manuscript/09-governance-compliance.md) | Module 5 | Lab 1 (Tagging), Lab 4 (RBAC), Lab 7 (Resource Locks) |
+| Managing and deploying Azure resources | [Ch 10](../book/manuscript/10-managing-deploying-resources.md) | Module 4 | All 7 labs (CLI/Bicep); Portal-vs-CLI-vs-Bicep walkthrough |
+| Monitoring tools in Azure | [Ch 11](../book/manuscript/11-monitoring-tools.md) | Module 6 | Lab 7 (Resource Locks & Monitor Alerts) — no longer conceptual-only |
 
 ---
 
@@ -49,7 +49,7 @@ These sub-objectives aren't exercised by any existing lab — AZ-900 is a knowle
 - Microsoft Purview — Chapter 9
 - Azure Arc — Chapter 10
 - Azure Migrate, Azure Data Box — Chapter 6
-- Azure Advisor, Azure Service Health, Azure Monitor/Log Analytics/Application Insights — Chapter 11
+- Azure Advisor, Azure Service Health — Chapter 11 (Azure Monitor itself now has a hands-on lab: Lab 7)
 
 ## Open items before publishing/recording
 

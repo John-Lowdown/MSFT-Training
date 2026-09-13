@@ -9,10 +9,11 @@ This repo is the free, clonable companion to the paid course — students deploy
 ```
 book/           The sellable AZ-900 study guide, structured chapter-for-chapter against
                 Microsoft's official skills outline. See book/README.md.
-labs/           Six hands-on labs, one per major exam domain. Each has main.bicep + README.md
-                with deploy/verify/cleanup commands and instructor talking points.
-walkthroughs/   Guided walkthroughs tied to specific modules (portal tours, practice-exam
-                review, etc.) that don't need their own IaC.
+labs/           Seven hands-on labs, one per major exam domain/sub-objective. Each has
+                main.bicep + README.md with deploy/verify/cleanup commands and instructor
+                talking points.
+walkthroughs/   Guided walkthroughs tied to specific labs/modules (portal tours, alert-rule
+                deep dives, practice-exam review, etc.) that don't need their own IaC.
 docs/           Skills-alignment map (domain -> chapter -> lab) and supporting reference material.
 ```
 
@@ -26,8 +27,11 @@ docs/           Skills-alignment map (domain -> chapter -> lab) and supporting r
 | 4 | [RBAC Role Assignment](labs/04-rbac-role-assignment/) | Identity, Governance, Compliance | $0 |
 | 5 | [Budgets & Cost Alerts](labs/05-budgets-cost-alerts/) | Pricing, SLA & Lifecycle | $0 |
 | 6 | [App Service (PaaS)](labs/06-app-service-paas/) | Cloud Concepts — IaaS/PaaS/SaaS | ~$0 |
+| 7 | [Resource Locks & Monitor Alerts](labs/07-resource-locks-monitor-alerts/) | Azure Management & Governance | ~$0 |
 
-Every lab uses only Free-tier or inherently-free resources, and every README ends with a `az group delete` cleanup step — run it right after each demo so nothing lingers on a bill.
+Every lab uses only Free-tier or inherently-free resources, and every README ends with a cleanup step — run it right after each demo so nothing lingers on a bill. Lab 7 has an extra cleanup step (removing its resource lock) before the resource group will delete — see that lab's README.
+
+Lab 7 also has a companion portal walkthrough: [`walkthroughs/07-resource-locks-monitor-alerts/`](walkthroughs/07-resource-locks-monitor-alerts/).
 
 ## Prerequisites
 
