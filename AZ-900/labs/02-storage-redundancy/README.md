@@ -42,3 +42,13 @@ az group delete --name rg-az900-lab02 --yes --no-wait
 - **This is a durability spectrum, not a performance or availability spectrum.** Redundancy tier affects how many copies of your data exist and where; it does not by itself determine uptime SLA in the way a load balancer or Availability Set does — don't let students conflate the two.
 - **Cost order:** LRS < ZRS ≈ GRS < GZRS/RA-GZRS, roughly — more copies and more distance cost more. This ties directly into Module 6 (pricing).
 - Point out `supportsHttpsTrafficOnly` and `minimumTlsVersion` in the template — a quick, free hook into Module 5 (security) without adding a new resource.
+
+## What you learned
+
+By completing this lab, you can now:
+
+- Compare LRS, ZRS, and GRS by exactly what each protects against — a drive/rack failure, a datacenter-level failure, or a full regional disaster.
+- Distinguish GRS from RA-GRS specifically on secondary-region readability: GRS's secondary copy is not readable until failover; RA-GRS adds a live read-only endpoint — a classic exam distractor.
+- Explain why storage redundancy is a durability lever, not a performance or availability lever, and avoid conflating it with load balancing or Availability Sets.
+- Locate a storage account's redundancy tier in the portal (**Data protection → Redundancy**) and identify the paired secondary region for a GRS account.
+- Describe the rough cost ordering across redundancy tiers (LRS < ZRS ≈ GRS < GZRS/RA-GZRS) and why more copies and more distance cost more.

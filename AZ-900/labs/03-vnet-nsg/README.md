@@ -39,3 +39,13 @@ az group delete --name rg-az900-lab03 --yes --no-wait
 - **This is defense in depth in miniature**, not a substitute for identity or encryption: an NSG controls *reachability at the network layer* — it says nothing about whether a request that gets through is authenticated.
 - **VNets don't cost anything** — a good moment to contrast with on-prem networking, where standing up equivalent segmentation means physical VLANs and hardware firewalls. This is a clean example for Module 2 (cloud concepts — CapEx vs OpEx).
 - Segue to Lab 6 (App Service): PaaS services like App Service don't sit inside your VNet by default — VNet integration is an explicit, extra step. Worth flagging now so it isn't a surprise later.
+
+## What you learned
+
+By completing this lab, you can now:
+
+- Explain how NSG rules are evaluated (priority number, lowest first, first match wins) and name the default rules Azure adds automatically that students never wrote themselves.
+- Describe where an NSG can attach — a subnet, a NIC, or both — and why this lab attaches at the subnet level.
+- State that an NSG controls network-layer reachability only, and place it correctly within defense in depth as one layer among several, not a substitute for identity or encryption.
+- Explain why VNets and NSGs carry no charge, and contrast that with the cost of building equivalent segmentation on-premises (VLANs, physical firewalls).
+- Explain why a PaaS service like App Service doesn't sit inside a VNet by default, setting up the contrast Lab 6 makes concrete.

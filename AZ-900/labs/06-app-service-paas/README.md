@@ -41,3 +41,13 @@ az group delete --name rg-az900-lab06 --yes --no-wait
 - **F1 (Free) has real limits worth naming**: no custom domains, no "Always On" (the app unloads after idle and cold-starts on the next request), 60 CPU-minutes/day. This lab defaults to F1 specifically so it's free, but say out loud why a real workload would move to B1 or higher — good bridge into Module 6 (pricing tiers as a lever, not just a cost line).
 - **`linuxFxVersion` and the managed runtime stack** — this is the crux of PaaS: Azure manages the underlying OS and language runtime patching. Compare to "SaaS" (you manage nothing, e.g., Microsoft 365) and "IaaS" (you manage almost everything, e.g., a raw VM) to complete the IaaS/PaaS/SaaS triad this lab exists to teach.
 - **`httpsOnly: true`** is set explicitly — a one-line, no-extra-cost callback to the shared responsibility model (Module 2) and security fundamentals (Module 5).
+
+## What you learned
+
+By completing this lab, you can now:
+
+- Explain what PaaS abstracts away compared to IaaS, using this lab's own "what you didn't have to configure" framing — no VM, no OS patching, no load balancer to wire up by hand.
+- Describe the relationship between an App Service Plan (the unit of billing and scale) and a Web App (code running on that plan) — including that multiple web apps can share one plan.
+- Name at least two real limits of the F1 (Free) tier (no custom domains, no Always On, 60 CPU-minutes/day) and explain why a production workload would move to B1 or higher.
+- Explain what `linuxFxVersion` controls and connect it to the IaaS/PaaS/SaaS triad: who manages the OS, who manages the runtime, who manages just the app.
+- State why `httpsOnly: true` is set explicitly here and connect it back to the shared responsibility model's customer-owned application layer.

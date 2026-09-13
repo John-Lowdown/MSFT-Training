@@ -37,3 +37,13 @@ az consumption budget delete --budget-name az900-lab05-monthly-budget
 - **Budgets are additive to — not a replacement for — the Pricing Calculator and TCO Calculator.** Tie this back to Module 6: the Pricing Calculator estimates cost *before* you deploy; the budget monitors actual cost *after*. Different tools, different moments in the lifecycle.
 - **Scope matters:** this lab creates a subscription-scoped budget, but budgets can also be created at the resource group or management group level (via the Cost Management API/portal) — subscription scope is what AZ-900's objectives explicitly reference.
 - **Why deploy this at subscription scope in Bicep** — same `targetScope` concept as Lab 1, reinforcing that not everything lives inside a resource group.
+
+## What you learned
+
+By completing this lab, you can now:
+
+- Explain why a budget is a notification mechanism, not a spending cap, and describe what it would take to make it actually stop spend (wiring the action group to an Automation runbook or Logic App).
+- Distinguish an Actual threshold from a Forecasted threshold, and describe a scenario where each would fire at a different point in the billing period.
+- Place budgets correctly relative to the Pricing Calculator: the calculator estimates cost *before* deployment, a budget monitors real cost *after* deployment.
+- State that budgets can be scoped above or below subscription level (resource group or management group), even though this lab deploys one at subscription scope.
+- Locate and read a budget's configuration and notification thresholds in **Cost Management + Billing → Budgets**.

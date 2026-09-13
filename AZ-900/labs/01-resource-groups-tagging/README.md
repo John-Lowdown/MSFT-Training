@@ -40,3 +40,13 @@ az group delete --name rg-az900-lab01 --yes --no-wait
 - **Why tag at all?** Cost allocation (tie spend to `costCenter`), automation targeting (scripts that act on everything tagged `environment=dev`), and governance reporting. This is a direct lead-in to Module 5 (governance/compliance) and Module 6 (cost management) later in the course.
 - **`targetScope = 'subscription'`** is worth pausing on — most students' first bicep file targets a resource group implicitly. This is their first look at deployment scopes (resource group / subscription / management group / tenant), which shows up again in Lab 4 (RBAC) and is directly testable on the exam.
 - **Idempotency:** re-running this deployment is safe — Bicep/ARM will no-op if nothing changed, which is a good moment to demo `az deployment sub create --what-if`.
+
+## What you learned
+
+By completing this lab, you can now:
+
+- Explain why a resource group is a management and lifecycle boundary — not a billing boundary or a network boundary.
+- State that tags on a resource group are **not** automatically inherited by the resources inside it, and why that's a commonly tested exam trap.
+- Describe at least two real reasons to tag resources beyond "organization": cost allocation (tie spend to a `costCenter`) and automation targeting (scripts acting on everything tagged `environment=dev`).
+- Identify `targetScope = 'subscription'` in a Bicep file and explain why creating a resource group itself is a subscription-level operation.
+- Demonstrate idempotency by re-running this deployment and observing that Bicep/ARM safely no-ops when nothing has changed.

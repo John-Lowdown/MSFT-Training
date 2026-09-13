@@ -44,3 +44,13 @@ az group delete --name rg-az900-lab04 --yes --no-wait
 - **`principalType` matters more than it looks.** Azure AD replication lag means a just-created group or service principal might not resolve immediately; passing the type explicitly avoids an intermittent deployment failure that otherwise looks like a bug in the student's own template.
 - **RBAC vs Azure Policy**, contrasted directly: RBAC answers "can this identity perform this action here?" Policy answers "is this resource's configuration compliant, regardless of who touched it?" Students conflate these constantly — this is a good moment to plant the distinction before Module 5 covers Policy in depth.
 - **Built-in vs custom roles:** this lab uses a built-in role (Reader) by GUID. Mention that custom roles exist for anything built-ins don't cover, but AZ-900 only expects familiarity with the common built-ins (Owner, Contributor, Reader, User Access Administrator).
+
+## What you learned
+
+By completing this lab, you can now:
+
+- Name the three components of every RBAC role assignment: a **security principal** (who), a **role definition** (what), and a **scope** (where).
+- Explain that RBAC role assignments are additive and inherit downward — a role granted at a higher scope flows down to everything beneath it.
+- State why `principalType` must be passed explicitly rather than inferred, and what real-world deployment failure that avoids.
+- Distinguish RBAC from Azure Policy using this lab's own three-part model as the anchor: RBAC answers "can this identity do this, here?"
+- Identify the difference between a built-in role (like Reader, used in this lab) and when a custom role would actually be needed instead.
