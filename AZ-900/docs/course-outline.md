@@ -1,79 +1,60 @@
-# AZ-900 Course Outline (7 Modules)
+# AZ-900 Skills Alignment (3 Domains)
 
-Working outline for the Udemy course. Each module lists its exam-guide domain, learning objectives, and the lab/walkthrough that reinforces it. Video length estimates are placeholders — refine once scripts exist.
+Master alignment map for this repo's AZ-900 book and video course, matching Microsoft's official skills-measured outline for Exam AZ-900 (per the [official study guide](https://learn.microsoft.com/credentials/certifications/resources/study-guides/az-900), skills as of July 20, 2026). Both the book (`../book/manuscript/`) and the video course walk through this same structure — this document is the single source of truth for what maps to what.
 
----
-
-## Module 1 — Exam Overview & Scoring
-**Est. length:** 15–20 min | **Lab/walkthrough:** none (orientation module)
-
-- What AZ-900 covers and what it deliberately doesn't (it's a fundamentals exam, not an associate-level exam — no deep hands-on config is tested)
-- Exam format: number of questions, time limit, passing score, question types (multiple choice, drag-and-drop, case studies)
-- How Microsoft weights the four domains (cloud concepts; Azure architecture & services; management & governance; pricing & support) — pull current weighting from the official exam skills outline before recording, since Microsoft revises these periodically
-- Registration logistics, retake policy, what's on the Pearson VUE/online proctoring checklist
-- How to use this course: watch → lab → practice questions, per module
-
-## Module 2 — Cloud Concepts
-**Est. length:** 45–60 min | **Lab/walkthrough:** conceptual only; referenced by Labs 1, 2, 3, 6
-
-- Shared responsibility model (what Microsoft manages vs. what the customer manages, and how that split moves across IaaS/PaaS/SaaS)
-- CapEx vs. OpEx, and why "pay for what you use" is the core economic argument for cloud
-- Economies of scale
-- Cloud deployment models: public, private, hybrid
-- Consumption-based pricing model
-- Scalability (scale up/out) vs. elasticity vs. high availability vs. fault tolerance vs. disaster recovery — these five terms get conflated constantly and are worth a dedicated comparison table on screen
-
-## Module 3 — Core Azure Services
-**Est. length:** 90–120 min | **Lab/walkthrough:** Labs 2 (Storage), 3 (Networking), 6 (App Service)
-
-- Compute options: VMs, VM Scale Sets, App Service, Azure Functions, Container Instances, AKS — when to reach for each
-- Networking fundamentals: VNets, subnets, NSGs, VPN Gateway, ExpressRoute, load balancers, Azure DNS
-- Storage: storage account types, redundancy tiers (LRS/ZRS/GRS/GZRS), blob access tiers (hot/cool/archive)
-- Databases: Azure SQL Database, Cosmos DB, when managed database services beat "a database on a VM"
-- Azure Marketplace and resource deployment methods (Portal, CLI, PowerShell, ARM/Bicep templates) — light touch, Module 4 goes deeper
-
-## Module 4 — Azure Management Tools
-**Est. length:** 45–60 min | **Lab/walkthrough:** all six labs demonstrate CLI + Bicep directly
-
-- Azure Portal tour
-- Azure CLI and Cloud Shell
-- Azure PowerShell (mention only — course leans CLI/Bicep for hands-on)
-- ARM templates vs. Bicep — why this course teaches Bicep (readability, native tooling, still compiles to ARM JSON under the hood)
-- Azure Resource Manager: resources, resource groups, subscriptions, management groups — the four-level scope hierarchy, tied directly back to Lab 1 and Lab 4's `targetScope` usage
-- Azure Mobile App, Azure Advisor (brief mentions)
-
-## Module 5 — Security, Privacy, Compliance
-**Est. length:** 60–75 min | **Lab/walkthrough:** Lab 3 (NSGs), Lab 4 (RBAC)
-
-- Defense in depth model
-- Azure Active Directory (Microsoft Entra ID) fundamentals: identities, authentication vs. authorization, MFA, Conditional Access (conceptual)
-- RBAC vs. Azure Policy — the distinction seeded in Lab 4, made explicit here
-- Network security: NSGs, Azure Firewall, DDoS Protection (conceptual)
-- Azure Security Center / Microsoft Defender for Cloud, Secure Score (conceptual)
-- Compliance: Microsoft's compliance offerings, Trust Center, Azure Government (awareness-level only — AZ-900 doesn't expect deep compliance-framework knowledge)
-
-## Module 6 — Pricing & SLAs
-**Est. length:** 45–60 min | **Lab/walkthrough:** Lab 5 (Budgets)
-
-- Factors affecting cost: resource type, region, bandwidth, licensing
-- Pricing Calculator vs. TCO Calculator — different tools, different moments (before deployment vs. comparing to on-prem)
-- Azure Cost Management: budgets, alerts, cost analysis — direct callback to Lab 5
-- Service Level Agreements: how Azure defines and publishes SLAs per service, composite SLAs when chaining services, SLA credits
-- Service lifecycle: Public Preview vs. GA vs. deprecated, and where to check current status
-
-## Module 7 — Full Practice Exam + Explanations
-**Est. length:** 90+ min | **Lab/walkthrough:** none (assessment module)
-
-- 60–70 question full-length practice exam mirroring the real AZ-900 format and domain weighting
-- Explanation video (or per-question written explanations) for every question, cross-referenced back to the module that covers it
-- Guidance on interpreting a practice score against the real passing threshold
-- "What's next" — the AZ-104 → AZ-305 upsell path, framed as a natural continuation rather than a hard sell
+> **Re-confirm before recording/publishing.** Microsoft revises the skills outline and domain weightings periodically — check the live study guide link above immediately before recording new video content or finalizing the book for sale.
 
 ---
 
-## Open items before recording
+## Domain 1 — Describe cloud concepts (25–30%)
 
-- [ ] Re-confirm current domain weightings and exam format against the live Microsoft AZ-900 exam page (Microsoft revises these — check immediately before recording Module 1)
-- [ ] Sanity-check all Bicep API versions in `labs/` against Microsoft Learn again close to publish date — see each lab's README for a direct link
-- [ ] Decide on practice-exam question bank size beyond the 60–70 in Module 7 (a rotating pool reduces the "answers get shared online" problem)
-- [ ] Storyboard/slide deck per module — not yet started
+| Sub-objective | Book chapter | Video module (legacy) | Lab/walkthrough |
+|---|---|---|---|
+| Describe cloud computing | [Ch 1](../book/manuscript/01-cloud-computing.md) | Module 2 (Cloud Concepts) | — |
+| Describe the benefits of using cloud services | [Ch 2](../book/manuscript/02-cloud-benefits.md) | Module 2 | — |
+| Describe cloud service types (IaaS/PaaS/SaaS) | [Ch 3](../book/manuscript/03-cloud-service-types.md) | Module 2 / Module 3 | Lab 6 (App Service) |
+
+## Domain 2 — Describe Azure architecture and services (35–40%)
+
+| Sub-objective | Book chapter | Video module (legacy) | Lab/walkthrough |
+|---|---|---|---|
+| Core architectural components of Azure | [Ch 4](../book/manuscript/04-core-architecture.md) | Module 4 (Management Tools) | Lab 1 (Resource Groups & Tagging) |
+| Azure compute and networking services | [Ch 5](../book/manuscript/05-compute-networking.md) | Module 3 (Core Azure Services) | Lab 3 (VNet & NSG), Lab 6 (App Service) |
+| Azure storage services | [Ch 6](../book/manuscript/06-storage-services.md) | Module 3 | Lab 2 (Storage Redundancy) |
+| Azure identity, access, and security | [Ch 7](../book/manuscript/07-identity-access-security.md) | Module 5 (Security, Privacy, Compliance) | Lab 3 (NSGs), Lab 4 (RBAC) |
+
+## Domain 3 — Describe Azure management and governance (30–35%)
+
+| Sub-objective | Book chapter | Video module (legacy) | Lab/walkthrough |
+|---|---|---|---|
+| Cost management in Azure | [Ch 8](../book/manuscript/08-cost-management.md) | Module 6 (Pricing & SLAs) | Lab 5 (Budgets & Cost Alerts), Pricing/TCO Calculator walkthrough |
+| Governance and compliance tools | [Ch 9](../book/manuscript/09-governance-compliance.md) | Module 5 | Lab 1 (Tagging), Lab 4 (RBAC) |
+| Managing and deploying Azure resources | [Ch 10](../book/manuscript/10-managing-deploying-resources.md) | Module 4 | All 6 labs (CLI/Bicep); Portal-vs-CLI-vs-Bicep walkthrough |
+| Monitoring tools in Azure | [Ch 11](../book/manuscript/11-monitoring-tools.md) | *(not previously covered)* | — (conceptual only) |
+
+---
+
+## What changed from the previous 7-module outline
+
+The video course was originally organized into 7 modules (exam overview, cloud concepts, core services, management tools, security, pricing, practice exam) as a teaching sequence. That sequence still works for video pacing, but it doesn't match how Microsoft actually groups objectives — identity/security sits inside "architecture and services," not its own domain, and Microsoft's outline includes a full monitoring-tools objective (Azure Advisor, Service Health, Azure Monitor) that the old outline never covered.
+
+This document now reflects Microsoft's domains directly. The "Video module (legacy)" column above preserves the mapping so the existing Udemy course structure isn't orphaned — each video module still corresponds to one or more book chapters, it's just no longer the primary organizing structure.
+
+## Gap topics (new in this alignment, conceptual-only in the book)
+
+These sub-objectives aren't exercised by any existing lab — AZ-900 is a knowledge-only exam, so the book covers them in prose rather than adding new hands-on labs:
+
+- Microsoft Entra ID specifics (SSO, MFA, passwordless, Conditional Access, external identities) — Chapter 7
+- Zero Trust — Chapter 7
+- Microsoft Purview — Chapter 9
+- Azure Arc — Chapter 10
+- Azure Migrate, Azure Data Box — Chapter 6
+- Azure Advisor, Azure Service Health, Azure Monitor/Log Analytics/Application Insights — Chapter 11
+
+## Open items before publishing/recording
+
+- [ ] Re-confirm current domain weightings and skills outline against the live Microsoft AZ-900 study guide (link above) immediately before recording or finalizing the book
+- [ ] Sanity-check all Bicep API versions in `../labs/` against Microsoft Learn again close to publish date — see each lab's README for a direct link
+- [ ] Draft remaining book chapters (2, 4–11) and both appendices (practice exam question bank, glossary) — see `../book/README.md` for current status
+- [ ] Decide on practice-exam question bank size beyond the 60–70 baseline (a rotating pool reduces the "answers get shared online" problem)
+- [ ] Storyboard/slide deck per video module — not yet started
