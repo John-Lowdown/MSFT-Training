@@ -7,14 +7,12 @@ This repo is the free, clonable companion to the paid course — students deploy
 ## Repo structure
 
 ```
-book/           The sellable AZ-900 study guide, structured chapter-for-chapter against
-                Microsoft's official skills outline. See book/README.md.
 labs/           Nine hands-on labs, one per major exam domain/sub-objective. Each has
                 main.bicep + README.md with deploy/verify/cleanup commands and instructor
                 talking points.
 walkthroughs/   Guided walkthroughs tied to specific labs/modules (portal tours, alert-rule
                 deep dives, practice-exam review, etc.) that don't need their own IaC.
-docs/           Skills-alignment map (domain -> chapter -> lab) and supporting reference material.
+docs/           Skills-alignment map (domain -> module -> lab) and supporting reference material.
 ```
 
 ## Labs
@@ -45,10 +43,6 @@ Every lab except Lab 9 has a companion portal walkthrough under [`walkthroughs/`
 
 Resource API versions in these templates were verified against Microsoft Learn as of **September 2026**. Azure ARM/Bicep API versions do drift over time — if you're watching this months after release and a deployment fails on an API version, check the [Azure Resource Manager template reference](https://learn.microsoft.com/azure/templates/) for the current version of that resource type.
 
-## Book
-
-A complete AZ-900 study guide, structured to match Microsoft's official skills-measured outline exactly — see [`book/README.md`](book/README.md) for status, structure, and build instructions. Builds to PDF/EPUB via Pandoc.
-
 ## Course
 
-Full course (video lectures, slide decks, practice exams) is on Udemy — see the skills alignment map in [`docs/course-outline.md`](docs/course-outline.md) for how domains, book chapters, video modules, and labs all map to each other.
+Full course (video lectures, slide decks, practice exams) is on Udemy — see the skills alignment map in [`docs/course-outline.md`](docs/course-outline.md) for how domains, video modules, and labs all map to each other.
