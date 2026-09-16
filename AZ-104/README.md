@@ -56,8 +56,6 @@ Resource API versions in these templates were selected as real, GA (non-preview)
 
 Full course (video lectures, slide decks, practice exams) mirrors the AZ-900 course's Udemy delivery model — see the skills alignment map in [`docs/course-outline.md`](docs/course-outline.md) for how domains, video modules, and labs all map to each other, including which exam sub-bullets have no dedicated Microsoft Learn module and how this repo's labs close that gap.
 
-**Scope note:** the AZ-1004 "Deploy and configure Azure Monitor" trainer materials referenced during drafting are used only as a depth reference for this course's Module 6 (monitoring) — AZ-1004 is a separate, narrower Microsoft credential, not part of the AZ-104 exam family. See "A note on scope" near the top of `docs/course-outline.md` for the full explanation.
-
 ## Status
 
 - [x] Course outline drafted and aligned against the official AZ-104 study guide (skills measured as of April 17, 2026) and all 32 modules across the six official Learn paths

@@ -2,15 +2,7 @@
 
 Working outline for the AZ-104 (Microsoft Certified: Azure Administrator Associate) exam-prep course/book — built to the same standard and format as the AZ-900 course outline in this repo. Each module lists its exam-guide domain, learning objectives, source Microsoft Learn modules (linked as supplemental training, per the AZ-900 pattern), and the lab/walkthrough that exercises it hands-on.
 
-**Aligned against Microsoft's official curriculum, September 2026:** this outline was cross-checked against the live [AZ-104 study guide, skills measured as of April 17, 2026](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104), all six official AZ-104 Microsoft Learn training paths (32 modules total), and — for Module 6 (monitoring) only — the official AZ-1004 "Deploy and configure Azure Monitor" Applied Skills trainer materials supplied during drafting, used strictly as a gap-analysis reference the way the AZ-900 outline used the MOC AZ-900T00A trainer PDFs — for topic/terminology coverage and structure, never as copied slide text, images, or exact wording. See "A note on scope" and "Alignment notes" below for what that means in practice and what changed as a result.
-
----
-
-## A note on scope: AZ-104 vs. AZ-1004
-
-Before this outline was drafted, a scope check turned up a real mismatch worth recording here so it isn't rediscovered later: the trainer materials referenced during drafting are for **AZ-1004: Deploy and configure Azure Monitor**, a separate, narrow one-day Microsoft "Applied Skills" credential — not part of the AZ-104 Administrator Associate exam family at all. AZ-1004 covers Log Analytics workspaces, Application Insights, VM monitoring agents/data collection rules, VNet *monitoring* (Network Watcher, Connection Monitor, IP flow verify, packet capture), and alerting — in much greater depth than AZ-104 needs, since AZ-104's "Monitor and maintain Azure resources" domain is only 10–15% of one broader exam.
-
-Decision for this course: build the **full AZ-104 Administrator Associate curriculum** (all five weighted skill domains, matching this repo's AZ-900 → AZ-104 → AZ-305 progression), and use the AZ-1004 materials only as a **depth reference for Module 6** (monitoring), since that's the one place their subject matter genuinely overlaps with an AZ-104 skill area. They are not used for anything networking-related, despite one AZ-1004 section also being titled "Configure monitoring for virtual networks" — that section is about *monitoring* a VNet (topology maps, connection tests, packet capture), not *configuring* one (subnets, NSGs, peering, routing, load balancing), which is what AZ-104 Module 5 and the real "Configure and manage virtual networks" Learn path actually test.
+**Aligned against Microsoft's official curriculum, September 2026:** this outline was cross-checked against the live [AZ-104 study guide, skills measured as of April 17, 2026](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104) and all six official AZ-104 Microsoft Learn training paths (32 modules total). See "Alignment notes" below for what that means in practice and what changed as a result.
 
 ---
 
@@ -211,8 +203,6 @@ Structured on the exam's own three sub-objectives:
 - [Introduction to Azure Monitor](https://learn.microsoft.com/training/modules/intro-to-azure-monitor/)
 - [Improve incident response with Azure Monitor alerts](https://learn.microsoft.com/training/modules/incident-response-with-alerting-on-azure/)
 
-**Supplemental reference for this module only — AZ-1004 trainer materials (topic/structure reference, not copied content):** Log Analytics workspace creation, data retention tiers, and workspace RBAC; KQL query patterns (simple mode vs. KQL mode); Azure Monitor Agent + Data Collection Rules; Network Watcher topology/Connection Monitor/IP flow verify/packet capture; and alert rule/action group anatomy all map directly onto named AZ-104 Module 6 sub-bullets and informed Lab 13's scope. Application Insights, also prominent in the AZ-1004 deck, has no corresponding AZ-104 sub-bullet and gets at most a brief mention.
-
 **Coverage gap closed by this repo's labs:** Log Analytics/KQL and the Recovery Services vault's hard-delete-blocking behavior (no dedicated Learn module covers the latter) are both exercised directly in Labs 13–14. Azure Site Recovery and failover remain the one sub-bullet this repo treats as optional/manual-only rather than a routine repeatable lab, given the cost and cross-region setup involved — see Lab 14's README for why.
 
 ## Module 7 — Full Practice Exam + Wrap-Up
@@ -234,7 +224,6 @@ All 14 labs are built — see [`../labs/`](../labs/) for the Bicep + README pair
 
 - [x] Domain weightings and exam format verified against Microsoft's official study guide (April 17, 2026 revision, checked September 2026).
 - [x] All 32 modules across the six official AZ-104 Learn paths enumerated and mapped to the five weighted exam domains.
-- [x] Scope conflict between the AZ-1004 trainer materials and AZ-104's actual curriculum identified and resolved — see "A note on scope" above.
 - [x] All 14 hands-on labs built (Bicep + README + portal walkthrough each) — see "Labs and walkthroughs built" above.
 - [ ] Pull full unit-level content (text, diagrams, knowledge-check questions) from all 32 Learn modules for the actual chapter drafts and to source diagrams for a `Learn Images/` folder, the way AZ-900's `Learn Images/` was built — not yet started.
 - [ ] Confirm current AZ-104 exam duration/question count directly on the Pearson VUE scheduling page immediately before publishing — the public study guide doesn't state either.
@@ -251,16 +240,12 @@ All 14 labs are built — see [`../labs/`](../labs/) for the Bicep + README pair
 - [AZ-104 study guide, skills measured as of April 17, 2026](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104) — the authoritative domain list, weightings, and sub-bullets this whole outline is built from.
 - [Microsoft Certified: Azure Administrator Associate](https://learn.microsoft.com/en-us/credentials/certifications/azure-administrator/) certification page — confirms 12-month renewal and "Last Updated 04/17/2026," consistent with the study guide.
 - All six official AZ-104 Microsoft Learn training paths (Prerequisites, Identities & Governance, Storage, Compute, Virtual Networks, Monitor & Backup) — 32 modules total, enumerated above.
-- The AZ-1004 "Deploy and configure Azure Monitor" Trainer Prep Guide and its three PowerPoint decks, used only for Module 6, only for topic/structure gap-checking, per "A note on scope" above.
 
-**What this review found (real content gaps between the Learn paths and the official exam skill list, not present in either the Learn modules or, where checked, the AZ-1004 materials) — and how this repo's labs close each one:**
+**What this review found (real content gaps between the Learn paths and the official exam skill list) — and how this repo's labs close each one:**
 - Module 2: resource locks, resource tagging, cost-management alerts/budgets/Advisor recommendations, and management-group configuration are named exam sub-bullets with no dedicated Learn module — closed by Labs 1–3.
 - Module 4: Azure Container Registry and Azure Container Apps are named exam sub-bullets; the compute path's only container module covers Container Instances alone — closed by Lab 8.
 - Module 5: Azure Bastion, service endpoints, and private endpoints for Azure PaaS are named exam sub-bullets with no dedicated module in the 8-module networking path — closed by Lab 11 (Bastion, private endpoints); service endpoints remain conceptual-only for now.
-- Module 6: Azure Site Recovery and cross-region failover are named exam sub-bullets absent from both the 4-module Learn path and the AZ-1004 materials — Lab 14 covers this as an explicitly optional, manual-only capstone section rather than a routine repeatable exercise, given the real cost and cross-region setup involved.
-
-**Where the AZ-1004 materials genuinely added value (Module 6 only):** Log Analytics workspace configuration/retention/RBAC, KQL query patterns, and alert rule/action group anatomy map directly onto named AZ-104 Module 6 sub-bullets and shaped Lab 13's scope. Application Insights, also prominent in the AZ-1004 deck, has no corresponding AZ-104 sub-bullet and was deliberately left out of Lab 13.
+- Module 6: Azure Site Recovery and cross-region failover are named exam sub-bullets absent from the 4-module Learn path — Lab 14 covers this as an explicitly optional, manual-only capstone section rather than a routine repeatable exercise, given the real cost and cross-region setup involved.
 
 **Considered and deliberately not adopted:**
-- Using the AZ-1004 Network Watcher content (topology, Connection Monitor, packet capture) for Module 5 instead of Module 6 — rejected, because the exam's own skill list places "Use Azure Network Watcher and Connection Monitor" under "Monitor and maintain Azure resources" (Module 6), not under "Implement and manage virtual networking" (Module 5), even though it's easy to assume otherwise since Network Watcher is a networking tool. Module 5's labs (10–12) keep Network Watcher out of scope entirely; Lab 13 picks it up as a manual task.
-- Copying AZ-1004 slide text, screenshots, or exact demo steps directly — these are Microsoft's copyrighted MOC/Applied Skills trainer materials; they're used here only to identify which topics and terms to cover and in what depth, the same arm's-length approach the AZ-900 outline took with the AZ-900T00A trainer PDFs.
+- Placing Network Watcher's configuration depth (topology, Connection Monitor, packet capture) under Module 5 instead of Module 6 — rejected, because the exam's own skill list places "Use Azure Network Watcher and Connection Monitor" under "Monitor and maintain Azure resources" (Module 6), not under "Implement and manage virtual networking" (Module 5), even though it's easy to assume otherwise since Network Watcher is a networking tool. Module 5's labs (10–12) keep Network Watcher out of scope entirely; Lab 13 picks it up as a manual task.
