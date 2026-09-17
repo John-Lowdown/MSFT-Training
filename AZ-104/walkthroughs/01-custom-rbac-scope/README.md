@@ -10,6 +10,8 @@ If you're doing the lab's optional manual task of creating a second test user to
 
 ![Microsoft Entra ID — creating a new user, showing the display name, UPN, and usage location fields](images/az104-item04-step3-properties-REQUIRED.png)
 
+**Step shown:** Create new user → Properties tab → Usage location field.
+
 *(This capture is from the study guide's generic example, not this lab's own tenant — the blade layout is identical either way.)*
 
 ## Part 1 — Find the role assignments
@@ -20,6 +22,8 @@ If you're doing the lab's optional manual task of creating a second test user to
 4. Find your principal listed twice: once under **AZ-104 Lab 01 Storage Operator**, once under **Reader**.
 
 ![Add role assignment — Members tab, with a principal selected and a role chosen, just before Review + assign](images/az104-item06-step1-members-REQUIRED.png)
+
+**Step shown:** Access control (IAM) → Add role assignment → Members tab, with a principal selected.
 
 *(Shown here with the built-in Contributor role as a generic example of this screen — your own Members tab will show AZ-104 Lab 01 Storage Operator or Reader instead, per this lab's Bicep.)*
 
@@ -43,6 +47,8 @@ Compare this against a built-in role: search **Storage Account Contributor** in 
 
 ![Check access — result panel showing a selected user's effective role assignments](images/az104-item07-step2-checkaccess-REQUIRED.png)
 
+**Step shown:** Access control (IAM) → Check access → result panel for a selected user.
+
 This is the same tool you'd use in a real support ticket: "why can/can't this user do X" almost always starts with Check access at the scope in question.
 
 ## Part 4 — Tour the scope hierarchy (read-only)
@@ -51,6 +57,8 @@ This is the same tool you'd use in a real support ticket: "why can/can't this us
 2. Look at whatever hierarchy exists in your tenant above the subscription level. If your tenant has never set one up, you'll see the default root management group with your subscription underneath it. For reference, here's the **Add subscription** blade you'd use if you ever did move one into a management group:
 
 ![Management group — Subscriptions tab, Add subscription blade](images/az104-item12-step1-addsubscription-REQUIRED.png)
+
+**Step shown:** Management groups → Subscriptions tab → Add subscription blade.
 
 3. **Do not move your subscription into a different management group.** This walkthrough is look-only — moving a production subscription changes policy and RBAC inheritance for everything underneath it, and undoing that cleanly is not guaranteed.
 4. Click into your subscription's own **Access control (IAM)** blade and compare its role assignments against the resource group's. Any role assigned at the subscription would show up as "inherited" if you checked access at the resource-group level — which is the hierarchy in action, just not one this lab's Bicep actually created.

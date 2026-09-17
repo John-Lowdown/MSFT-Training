@@ -27,11 +27,16 @@ This is the point worth pausing on: one assignment below is about to carry both 
 
 ![Assign policy — Basics tab, scope and policy definition selected](images/az104-item08-step1-basics-REQUIRED.png)
 
+**Step shown:** Assign policy wizard → Basics tab → scope and policy definition.
+
 *(Generic example from the study guide, showing the Assign policy wizard's Basics tab — your own assignment will show the initiative rather than a single built-in definition.)*
 
 3. Click the **Managed identity** tab. You'll see a **System assigned** identity, enabled.
 
 ![Assign policy — Parameters tab](images/az104-item08-step2-parameters-REQUIRED.png)
+
+**Step shown:** Assign policy wizard → Parameters tab.
+
 4. In a new tab, go to that identity's object in **Microsoft Entra ID → Enterprise applications** (search its object ID), or simply go to `rg-az104-lab02 → Access control (IAM) → Role assignments` and find the **Tag Contributor** role assigned to a principal whose name matches the policy assignment — that's the identity's role grant, created automatically when the assignment was deployed with `identity: SystemAssigned`.
 
 ## Part 4 — Check compliance
@@ -41,6 +46,8 @@ This is the point worth pausing on: one assignment below is about to carry both 
 3. Once populated, `rg-az104-lab02` should show as a remediated/compliant resource for the Modify policy.
 
 ![Policy compliance view](images/az104-item08-step3-compliance.png)
+
+**Step shown:** Policy → Compliance view for the assignment.
 
 ## Part 5 — Watch the remediation task
 

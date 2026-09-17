@@ -13,6 +13,8 @@ A guided, portal-first walkthrough of what [Lab 03](../../labs/03-governance-tag
 
 ![Create budget — amount, reset period, and an alert threshold configured](images/az104-item13-step1-setalerts-REQUIRED.png)
 
+**Step shown:** Cost Management → Budgets → Create budget → alert threshold configuration.
+
 5. Click through to the action group (`ag-az104-lab03`) and confirm the email receiver you passed as `contactEmail` when deploying.
 
 Notice this budget's scope — it was created with a resource-group filter, so it only tracks spend inside `rg-az104-lab03`, not the whole subscription.
@@ -24,11 +26,15 @@ Notice this budget's scope — it was created with a resource-group filter, so i
 
 ![Add a lock — name and lock type (CanNotDelete/ReadOnly) fields](images/az104-item09-step2-addlock-REQUIRED.png)
 
+**Step shown:** Resource group → Locks → Add lock → name and lock type fields.
+
 3. From its **Overview** page, click **Move** → **Move to another resource group**.
 4. Select (or type) `rg-az104-lab03-movetarget` as the destination (create it first if you haven't run the manual CLI step yet) and click through the validation step.
 5. Watch it fail. The validation error names the lock directly — something like *"...cannot be moved because it has a lock of level CanNotDelete..."*
 
 ![Move blade — blocked by a resource lock](images/az104-item11-step1-move-REQUIRED.png)
+
+**Step shown:** Resource → Move → Move to another resource group, blocked by the lock.
 
 This is the moment worth pausing on: the same lock that blocks delete blocks this move too, and the portal's own pre-move validation catches it before you even reach the confirm button.
 
