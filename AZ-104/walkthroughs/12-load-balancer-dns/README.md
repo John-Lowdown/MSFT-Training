@@ -10,6 +10,8 @@ A guided, portal-first walkthrough of what [Lab 12](../../labs/12-load-balancer-
 2. Select **Frontend IP configuration** in the left menu — one entry, `feConfig`, using `pip-az104lab12-lb`. This is where a request arrives.
 3. Select **Backend pools** — one entry, `beAddressPool`. Open it; it's empty in this lab (no VMs deployed), which is expected — the pool, rule, and probe are all real and correctly wired even with nothing registered in the pool yet.
 4. Select **Health probes** — `httpProbe`, protocol TCP, port 80, checking every 5 seconds. This is what would decide, if the pool had members, which of them actually receive traffic.
+
+![Health probes — protocol, port, and interval, alongside which load-balancing rule references it](images/az104-item37-lb-healthprobe-REQUIRED.png)
 5. Select **Load balancing rules** — `lbRuleHttp`. Open it and look at how it references all three pieces you just saw: the frontend IP from step 2, the backend pool from step 3, and the probe from step 4. This rule is the thing that ties a request arriving at the frontend to where it's allowed to go and under what health condition.
 
 That's the full path: frontend → rule → probe-gated backend pool. Walk it in that order out loud — it's the same order the portal's own blades are listed in.

@@ -7,6 +7,9 @@ A guided, portal-first walkthrough of what [Lab 14](../../labs/14-backup-recover
 ## Part 1 — The vault and policy, as deployed
 
 1. Open your resource group (`rg-az104-lab14`) and click into **rsv-az104lab14**.
+
+![Recovery Services vault create — Basics tab, resource group, vault name, and region](images/az104-item42-rsv-create-basics-REQUIRED.png)
+
 2. On **Overview**, note there's nothing to protect yet — a fresh vault is an empty shell until something is backed up into it.
 3. In the left-hand menu, under **Manage**, select **Backup policies**.
 4. Open `policy-az104lab14-daily` and confirm the **Backup schedule** (daily, at the UTC time you deployed with) and the **Retention range** (7 daily points by default).
@@ -18,6 +21,9 @@ If you skipped the manual backup task, this is as far as the vault goes — and 
 1. Navigate to the VM you're protecting (e.g. `vm-az104lab06`, if Lab 06 is still deployed).
 2. In its left-hand menu, find **Data protection** (or **Backup**, depending on your portal version) under **Settings**.
 3. Select `rsv-az104lab14` as the **Recovery Services vault**, then `policy-az104lab14-daily` as the **Backup policy**.
+
+![Virtual machine — Data protection → Backup, vault selection and policy choice together](images/az104-item43-vm-backup-configure-REQUIRED.png)
+
 4. Click **Enable backup**. This kicks off the protection association — give it a minute or two.
 5. Back on the vault, under **Protected items**, select **Backup items**. You should now see the VM listed with a status (initial state is often "Protected — Initial backup pending" until the first backup job runs).
 
@@ -31,6 +37,9 @@ If you skipped the manual backup task, this is as far as the vault goes — and 
 ## Part 4 — Walk the restore wizard (without completing it, unless you want to)
 
 1. From the VM's **Backup items** detail page, select a restore point, then **Restore VM**.
+
+![Restore VM — restore point, restore option, and target resource group shown together](images/az104-item44-restorevm-config-REQUIRED.png)
+
 2. Step through the wizard's tabs:
    - **Basics** — recovery point selection, and the OS type Azure detected.
    - **Restore Configuration** — this is where **Create new**, **Replace existing**, and **Restore disks only** show up as distinct choices. Read each option's description in the portal before picking one.
@@ -46,6 +55,8 @@ Only do this part if you've read the lab README's warning about it first: it nee
 1. On the vault, under **Getting Started**, select **Site Recovery**.
 2. Choose **Azure virtual machines**, then **Replicate**.
 3. Pick the source VM, then a **target region** (must differ from the source), target resource group, and target VNet.
+
+![Enable replication — source VM, target region, and target virtual network across the wizard's tabs](images/az104-item45-siterecovery-replicate-REQUIRED.png)
 4. Click **Enable replication** and wait — initial replication sync can take anywhere from 30 minutes to several hours depending on disk size.
 5. Once the vault's **Replicated items** page shows the VM in a healthy replication state, select it and click **Failover**.
 6. Pick a recovery point, then **Commit** to actually bring up the failed-over VM in the target region.

@@ -7,6 +7,11 @@ A guided, portal-first walkthrough of what [Lab 09](../../labs/09-app-service-ad
 ## Part 1 — Production and staging, side by side
 
 1. Open your resource group (`rg-az104-lab09`) and click into your web app.
+
+![App Service create — Basics tab, app name and the App Service plan's SKU](images/az104-item26-appservice-name-sku-REQUIRED.png)
+
+*(Create-time view, shown for reference — this lab's Bicep already provisioned the app on a Standard S1 plan, which is what actually enables the deployment slot used below.)*
+
 2. In the left-hand menu, under **Deployment**, select **Deployment slots**.
 3. You'll see two rows: **production** and **staging**, each with its own independent URL (`<app>.azurewebsites.net` and `<app>-staging.azurewebsites.net`).
 4. Open both URLs in separate tabs. Both show the same default placeholder page right now — that's expected, since neither has custom code deployed, but notice they are two fully separate running instances, not one app with a flag.
@@ -16,6 +21,8 @@ A guided, portal-first walkthrough of what [Lab 09](../../labs/09-app-service-ad
 1. Still on **Deployment slots**, click **Swap**.
 2. In the swap dialog, set **Source** to `staging` and **Target** to `production`.
 3. Look for the **Preview changes** option before confirming — this lets you see exactly what configuration would change on each side before the swap actually happens.
+
+![Deployment slots — Swap dialog, source and target slot selected with Preview changes visible](images/az104-item27-deploymentslots-swap-REQUIRED.png)
 4. You can cancel out of this dialog without swapping anything — the point of this part is seeing the dialog's shape, not necessarily executing a live swap during the walkthrough. If you do want to run one for real, use the `az webapp deployment slot swap` command from the lab README's manual tasks instead, so you have a clean audit trail of exactly what you ran.
 
 ## Part 3 — VNet integration status

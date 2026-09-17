@@ -4,12 +4,24 @@ A guided, portal-first walkthrough of what [Lab 01](../../labs/01-custom-rbac-sc
 
 **Prerequisite:** Lab 01 is already deployed (`az deployment sub create ...` from the lab README) and you have the Azure Portal open at [portal.azure.com](https://portal.azure.com).
 
+## Part 0 (optional) — Create a test principal
+
+If you're doing the lab's optional manual task of creating a second test user to assign Reader to: **Microsoft Entra ID → Users → + New user → Create new user**, then set the display name, user principal name, and usage location.
+
+![Microsoft Entra ID — creating a new user, showing the display name, UPN, and usage location fields](images/az104-item04-step3-properties-REQUIRED.png)
+
+*(This capture is from the study guide's generic example, not this lab's own tenant — the blade layout is identical either way.)*
+
 ## Part 1 — Find the role assignments
 
 1. Open your resource group (`rg-az104-lab01`).
 2. In the left-hand menu, select **Access control (IAM)**.
 3. Click the **Role assignments** tab.
 4. Find your principal listed twice: once under **AZ-104 Lab 01 Storage Operator**, once under **Reader**.
+
+![Add role assignment — Members tab, with a principal selected and a role chosen, just before Review + assign](images/az104-item06-step1-members-REQUIRED.png)
+
+*(Shown here with the built-in Contributor role as a generic example of this screen — your own Members tab will show AZ-104 Lab 01 Storage Operator or Reader instead, per this lab's Bicep.)*
 
 Notice both assignments share the same scope — this resource group — but come from two different role definitions.
 
@@ -29,12 +41,17 @@ Compare this against a built-in role: search **Storage Account Contributor** in 
 2. Search for your own account (or the test principal from the lab's manual tasks, if you created one).
 3. Select it, and read the **Current access** panel that appears — it lists both **AZ-104 Lab 01 Storage Operator** and **Reader**, with the scope each came from.
 
+![Check access — result panel showing a selected user's effective role assignments](images/az104-item07-step2-checkaccess-REQUIRED.png)
+
 This is the same tool you'd use in a real support ticket: "why can/can't this user do X" almost always starts with Check access at the scope in question.
 
 ## Part 4 — Tour the scope hierarchy (read-only)
 
 1. In the portal search bar, go to **Management groups**.
-2. Look at whatever hierarchy exists in your tenant above the subscription level. If your tenant has never set one up, you'll see the default root management group with your subscription underneath it.
+2. Look at whatever hierarchy exists in your tenant above the subscription level. If your tenant has never set one up, you'll see the default root management group with your subscription underneath it. For reference, here's the **Add subscription** blade you'd use if you ever did move one into a management group:
+
+![Management group — Subscriptions tab, Add subscription blade](images/az104-item12-step1-addsubscription-REQUIRED.png)
+
 3. **Do not move your subscription into a different management group.** This walkthrough is look-only — moving a production subscription changes policy and RBAC inheritance for everything underneath it, and undoing that cleanly is not guaranteed.
 4. Click into your subscription's own **Access control (IAM)** blade and compare its role assignments against the resource group's. Any role assigned at the subscription would show up as "inherited" if you checked access at the resource-group level — which is the hierarchy in action, just not one this lab's Bicep actually created.
 

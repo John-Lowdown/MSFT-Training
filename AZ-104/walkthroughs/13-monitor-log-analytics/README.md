@@ -11,9 +11,17 @@ A guided, portal-first walkthrough of what [Lab 13](../../labs/13-monitor-log-an
 3. You'll see `diag-az104lab13-metrics` — open it and confirm it's sending the `Transaction` metric category to `law-az104lab13`.
 4. Back on the storage account, go to **Data storage → Containers**... actually, the blob-scoped setting isn't listed on this page. Instead, from the storage account's **Diagnostic settings** blade, use the resource-type dropdown near the top (or navigate via **Monitoring → Diagnostic settings** directly on the **Blob service** sub-resource if your portal layout exposes it separately) to find `diag-az104lab13-blob-logs` and confirm it's sending the `allLogs` category group to the same workspace.
 
+![Diagnostic settings — log categories checked on the left, a Log Analytics workspace destination checked on the right](images/az104-item39-nsg-diagnosticsettings-REQUIRED.png)
+
+*(Captured on an NSG's Diagnostic settings blade as a generic example — the same category-checkboxes-plus-destination layout applies to the storage account and blob-service settings you're reading here.)*
+
 This split — one setting scoped to the account, one scoped to the blob service underneath it — is worth pointing at directly: metrics and logs for the "same" storage account aren't always configured from the same blade.
 
 ## Part 2 — Run the log query
+
+For reference, here's the create-time Basics tab that provisioned this lab's workspace directly via Bicep:
+
+![Log Analytics workspace create — Basics tab, resource group, workspace name, and region](images/az104-item38-loganalytics-basics-REQUIRED.png)
 
 1. Open **law-az104lab13** (search for it, or find it in the resource group) and select **Logs** from the left-hand menu.
 2. If a query-builder/example panel opens automatically, dismiss or scroll past it to the empty query box.
@@ -40,6 +48,8 @@ This split — one setting scoped to the account, one scoped to the blob service
 1. In the search bar, go to **Monitor → Alerts → Alert rules**.
 2. Open `alert-az104lab13-transactions`.
 3. Look at the **Condition**: metric = `Transactions`, aggregation = Total, threshold = the value you deployed with (default 1000), evaluated over a 1-hour window, checked every 5 minutes.
+
+![Create alert rule — Condition tab, signal, threshold, and evaluation window together](images/az104-item40-alertrule-condition-REQUIRED.png)
 4. Look at **Actions**: it points at `ag-az104lab13`. Click through to confirm the email receiver matches the `contactEmail` you deployed with.
 
 This is the same metric-alert-plus-action-group shape as AZ-900 Lab 7 — if you want the full walkthrough of an alert rule's anatomy, that lab's walkthrough covers it in more depth; this lab's new material is everything in Parts 1-3 above.
@@ -51,6 +61,8 @@ Skip this part if you didn't run the `az network watcher flow-log create` comman
 1. Search for **Network Watcher** in the portal.
 2. Select **Flow logs** from the left-hand menu.
 3. Find `fl-az104lab13-demo` and open it.
+
+![Flow log create — flow log type, target resource, and traffic analytics workspace selection](images/az104-item41-flowlog-create-REQUIRED.png)
 4. Confirm the **Target NSG**, the **Storage account** (if configured) or **Log Analytics workspace** destination, and that **Traffic Analytics** is off unless you explicitly turned it on.
 5. If you're done looking at it, disable or delete it now — this is the one resource in this entire lab that keeps billing for as long as it stays enabled, and it doesn't get cleaned up by deleting `rg-az104-lab13`.
 

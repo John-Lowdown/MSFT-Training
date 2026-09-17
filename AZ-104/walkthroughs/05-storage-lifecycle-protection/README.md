@@ -12,12 +12,17 @@ A guided, portal-first walkthrough of what [Lab 05](../../labs/05-storage-lifecy
 4. On the **Details** tab, confirm the filter scope is `lab05data/logs/` and blob type is block blobs only.
 5. On the **Base blobs** tab, confirm the actions: move to cool storage after 30 days, delete after 180 days — both measured from last modification.
 
+![Lifecycle management — Add a rule, Details tab, a move-to-cool action at 30 days and a delete action at 180 days](images/az104-item17-lifecycle-rule-REQUIRED.png)
+
 This rule is live and correctly configured, but the portal has no "run now" button for a lifecycle policy — it genuinely waits for Azure's own evaluation cycle.
 
 ## Part 2 — Read the object replication policy
 
 1. Still on the source account, select **Object replication** under **Data management**.
 2. Open the replication rule. Confirm the source container and destination container are both `lab05data`, and the destination account matches your deployment.
+
+![Object replication — Set up replication rules, source and destination account/container pair](images/az104-item18-objectreplication-REQUIRED.png)
+
 3. Look at the rule's **Copy progress / status** column — with an empty container it should show as complete or near-complete quickly.
 4. Open the **destination** storage account and check its own **Object replication** blade — it shows the same policy from the receiving side, read-only from here (the policy itself is managed from the source side).
 
@@ -40,6 +45,9 @@ This is the payoff moment for two lab resources that are otherwise just settings
 
 1. On the source account, select **Data storage → File shares**.
 2. Open `lab05share` and confirm the quota (5 GiB) and access tier (Cool) match the template.
+
+![Create file share — name, tier, and quota fields](images/az104-item19-fileshare-create-REQUIRED.png)
+
 3. Note that this share has no relationship whatsoever to anything in Parts 1–4 — it's here purely to show that Azure Files lives in the same account as Blob Storage without the two services interacting.
 
 ## What you learned

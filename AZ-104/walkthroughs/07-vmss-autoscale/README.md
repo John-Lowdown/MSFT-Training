@@ -18,6 +18,9 @@ A guided, portal-first walkthrough of what [Lab 07](../../labs/07-vmss-autoscale
 4. Scroll to the **Rules** list. You should see two:
    - **Increase count by 1** when **Percentage CPU** > 70 (average, over 5 minutes)
    - **Decrease count by 1** when **Percentage CPU** < 30 (average, over 5 minutes)
+
+![Custom autoscale — scale-out and scale-in rules shown together with the instance limit range](images/az104-item23-vmss-autoscale-REQUIRED.png)
+
 5. Click into either rule to see its **Cooldown** (5 minutes) — the pause autoscale enforces before evaluating and acting on that rule again.
 
 Notice these are genuinely two separate rule objects, not one rule with a range — that's the pairing this lab's lecture notes call out as a common thing to miss.

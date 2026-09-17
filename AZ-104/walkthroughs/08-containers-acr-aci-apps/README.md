@@ -7,6 +7,11 @@ A guided, portal-first walkthrough of what [Lab 08](../../labs/08-containers-acr
 ## Part 1 — The registry: stores images, runs nothing
 
 1. Open your resource group (`rg-az104-lab08`) and click into the container registry.
+
+![Container registry — Create → Basics tab, registry name and SKU](images/az104-item24-acr-create-basics-REQUIRED.png)
+
+*(Create-time view, shown for reference — your registry already exists from this lab's Bicep on the Basic SKU rather than Premium.)*
+
 2. In the left-hand menu, select **Repositories**.
 3. If you completed the lab README's optional `az acr build` manual task, you'll see a `demo` repository with a `v1` tag here. If you skipped it, the list is empty — and that's the point worth saying out loud: **an empty registry is still a fully valid, fully billed registry.** It doesn't need to be running anything to exist or to cost money.
 4. Open **Settings → Access keys** briefly — note `adminUserEnabled` is off in this template (Azure AD / RBAC-based access is the modern recommended path over the legacy admin account).
@@ -24,6 +29,9 @@ A guided, portal-first walkthrough of what [Lab 08](../../labs/08-containers-acr
 2. On **Overview**, open the **Application Url** to confirm it responds.
 3. In the left-hand menu, under **Application**, select **Scale**.
 4. Confirm **Min replicas: 0**, **Max replicas: 1**, and the HTTP scale rule (`http-scale-rule`, concurrent requests threshold `10`).
+
+![Container App — Application → Scale, min/max replica range and HTTP scale rule](images/az104-item25-containerapp-scale-REQUIRED.png)
+
 5. Go to **Revisions and replicas** — if no traffic has hit the app recently, you may see **0 replicas running**. That's the scale-to-zero behavior working as designed, not a failure: unlike the Container Instance in Part 2, an idle Container App isn't running (or billing for compute) at all until a request arrives.
 
 ## Part 4 — The managed environment underneath it

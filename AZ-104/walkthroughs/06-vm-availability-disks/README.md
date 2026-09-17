@@ -17,6 +17,11 @@ This is the zone you set with the `vmZone` parameter at deploy time (default `1`
 1. In the VM's left-hand menu, under **Settings**, select **Disks**.
 2. Click the OS disk's name to open its own resource blade.
 3. On the disk's **Overview**, confirm the **SKU** reads **Premium SSD LRS** and note the **Size** (GiB) provisioned from the image.
+
+![Virtual machine create — Disks tab, OS disk type set to Premium SSD](images/az104-item21-vm-disks-osdisktype-REQUIRED.png)
+
+*(This is the create-time equivalent of what the disk's Overview shows after the fact — same Premium SSD choice, captured at deploy time instead of read back afterward.)*
+
 4. Go back to the disk's **Size + performance** page (under Settings) to see the IOPS/throughput tier that SKU and size combination gives you — this is the number a "why did we pick Premium here" conversation is actually about.
 
 ## Part 3 — Confirm encryption at host
@@ -29,6 +34,8 @@ This is the zone you set with the `vmZone` parameter at deploy time (default `1`
 
 1. On the VM, go to **Settings → Size**.
 2. Look at the list of available sizes. Every option shown is filtered to what the VM's **current hardware cluster** actually supports — this is the same constraint `az vm resize` runs into from the CLI.
+
+![Virtual machine — Settings → Size, filtered size list](images/az104-item22-vm-size-list-REQUIRED.png)
 3. You don't need to actually pick a new size and resize for this walkthrough — the teaching point is seeing the filtered list exist, not completing a live resize (which would restart the VM). If you do want to demo it live, selecting a size and clicking **Resize** triggers the same restart/brief-downtime behavior described in the lab README's manual tasks.
 
 ## Part 5 — Tour the network stack
