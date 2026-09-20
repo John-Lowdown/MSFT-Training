@@ -66,6 +66,26 @@ Skip this part if you didn't run the `az network watcher flow-log create` comman
 4. Confirm the **Target NSG**, the **Storage account** (if configured) or **Log Analytics workspace** destination, and that **Traffic Analytics** is off unless you explicitly turned it on.
 5. If you're done looking at it, disable or delete it now — this is the one resource in this entire lab that keeps billing for as long as it stays enabled, and it doesn't get cleaned up by deleting `rg-az104-lab13`.
 
+## Part 6 — VM Insights, if you did the optional manual task
+
+Skip this part if you didn't enable VM Insights from the lab README's manual tasks.
+
+1. Open the VM you enabled it on (e.g. `vm-az104lab06`) and select **Insights** under **Monitoring**.
+2. On first open, give it a few minutes if the charts are still empty — VM Insights needs the Azure Monitor Agent to have been running and reporting for a short while before data shows up.
+3. Look at the **Performance** tab: CPU, memory, disk, and network charts, all populated without you having configured a single metric alert by hand.
+4. Switch to the **Map** tab and confirm it renders the VM as a node, with any active network connections shown as edges — this dependency-map view is specifically what VM Insights adds over a plain metric.
+
+## Part 7 — Connection Monitor, if you did the optional manual task
+
+Skip this part if you didn't create a Connection Monitor from the lab README's manual tasks.
+
+1. Search for **Network Watcher**, then select **Connection Monitor** from the left-hand menu.
+2. Open `cm-az104lab13-demo` (or whatever you named it).
+3. On the **Topology** view, confirm you can see the source endpoint (your VM) and the destination endpoint you configured, with a line between them.
+4. Switch to the test results / latency view and confirm it's showing recent test results — if it's empty, give it a few minutes, since results take a little time to start populating after the monitor is created.
+5. Say out loud what makes this different from the flow log in Part 5: a flow log is a passive record of traffic that already happened, while this test is actively and repeatedly checking the path on its own schedule, whether or not any other traffic is flowing.
+6. If you're done looking at it, delete it now — like the flow log, this doesn't get cleaned up by deleting `rg-az104-lab13`.
+
 ## What you learned
 
 Walking through this lab in the portal, you should now be able to:
@@ -75,3 +95,5 @@ Walking through this lab in the portal, you should now be able to:
 - **Demonstrate that the portal's simple query mode generates real KQL** underneath its filter UI, rather than treating the two as separate systems.
 - **Read a metric alert's full condition and action configuration**, building on the anatomy first introduced in AZ-900 Lab 7.
 - **Find flow logs in the Network Watcher blade** (not the resource group they're protecting) and explain why that resource's billing and lifecycle are intentionally separate from the rest of this lab.
+- **Read a VM's Insights view** — Performance charts and the dependency Map — and explain what it shows beyond a single metric chart.
+- **Read a Connection Monitor's topology and test-result views**, and explain why its ongoing, scheduled testing is a different kind of "watch the network" than a flow log's passive recording.

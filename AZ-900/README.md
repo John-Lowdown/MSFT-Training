@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="../assets/lowdown-lab-logo.png" alt="The Lowdown Lab" width="280">
+</p>
+
 # AZ-900: Azure Fundamentals — Course Companion Repo
 
 Companion hands-on labs, Bicep templates, and walkthroughs for the AZ-900 (Microsoft Azure Fundamentals) video course.

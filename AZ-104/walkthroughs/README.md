@@ -1,6 +1,6 @@
 # Walkthroughs
 
-This folder holds guided, click-by-click portal walkthroughs that support a lab — touring what its Bicep deployed — or, for the handful of genuinely manual-only exam topics (Entra ID's role in Lab 1, Site Recovery in Lab 14), the primary walkthrough of doing the thing by hand in the portal.
+This folder holds guided, click-by-click portal walkthroughs that support a lab — touring what its Bicep deployed — or, for the handful of genuinely manual-only exam topics (Entra ID's role in Lab 1, Site Recovery in Lab 14, and the whole of Lab 15's Entra users/groups/licensing), the primary walkthrough of doing the thing by hand in the portal.
 
 ## Built
 
@@ -20,14 +20,15 @@ Every lab has a matching portal-first walkthrough — assumes the lab is already
 - [`12-load-balancer-dns/`](12-load-balancer-dns/) — [Lab 12](../labs/12-load-balancer-dns/): tracing one request through backend pools/health probes/LB rules, the explicit outbound rule Standard SKU requires, and the DNS zone's auto-generated NS records.
 - [`13-monitor-log-analytics/`](13-monitor-log-analytics/) — [Lab 13](../labs/13-monitor-log-analytics/): running a real KQL query against the workspace, confirming the diagnostic setting's categories/destination, and (optionally) a flow log's target and destination workspace.
 - [`14-backup-recovery/`](14-backup-recovery/) — [Lab 14](../labs/14-backup-recovery/): the vault and backup policy, protected-VM restore points and the Restore VM wizard, and a clearly optional final section on Site Recovery's Replicate/Failover wizards.
+- [`15-entra-users-groups-licensing/`](15-entra-users-groups-licensing/) — [Lab 15](../labs/15-entra-users-groups-licensing/): creating a user by hand and in bulk, building a dynamic-membership group next to an assigned one, group-based licensing, inviting a B2B guest, and reading the tenant's SSPR policy.
 
 ## Planned
 
 Mapped to the skills alignment in [`../docs/course-outline.md`](../docs/course-outline.md):
 
 - **Module 1:** Administrator tooling primer — Cloud Shell, Bash vs. PowerShell side-by-side, first ARM/Bicep deploy from VS Code
-- **Module 4:** Export-template walkthrough — exporting a resource group to ARM JSON and converting it to Bicep (`az bicep decompile`)
+- **Module 4:** Export-template *portal* walkthrough (click-by-click through the Export template blade) — the CLI equivalent (`az group export` + `az bicep decompile`) is already a manual task in [Lab 6](../labs/06-vm-availability-disks/), this would add the portal-native version
 - **Module 5:** Application Gateway tour — Layer 7 routing contrasted live against Lab 12's Layer 4 Load Balancer (no dedicated lab yet)
 - **Module 7:** Capstone scenario walkthrough — deploying the full cross-domain scenario sketched in the course outline's Module 7 section as one guided session
 
-Add one subfolder per walkthrough as they're built (e.g. `15-application-gateway/`) following the same `README.md`-first convention as `labs/`.
+Add one subfolder per walkthrough as they're built (e.g. `16-application-gateway/`) following the same `README.md`-first convention as `labs/`.

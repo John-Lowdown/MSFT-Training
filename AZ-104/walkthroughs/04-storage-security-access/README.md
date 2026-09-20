@@ -16,6 +16,15 @@ A guided, portal-first walkthrough of what [Lab 04](../../labs/04-storage-securi
 
 Notice what this blade does *not* show: nothing here references SAS tokens, roles, or identities. This is purely the "can the request reach the account" layer.
 
+## Part 1a — Find the service endpoint's VNet rule
+
+1. Still on the **Firewalls and virtual networks** tab, scroll to **Virtual networks**. Find `vnet-az104lab04-trusted` / `snet-trusted` listed there — this is the service-endpoint-backed VNet rule from the template, sitting right alongside your IP rule above.
+
+![Storage account networking — Virtual networks section, snet-trusted listed with a green "Enabled" service endpoint status](images/az104-item46-networking-vnetrule-serviceendpoint-REQUIRED.png)
+
+2. Click into the subnet link — it opens `vnet-az104lab04-trusted`'s subnet blade, where **Service endpoints** shows `Microsoft.Storage`. This is the mechanism that lets the subnet appear in this list at all: without the service endpoint on the subnet, the storage account couldn't offer it as an allow-listable VNet rule.
+3. Compare this to what Lab 11's private endpoint looks like on its own storage account's Networking blade: a private endpoint shows up under **Private endpoint connections**, a completely separate section from **Virtual networks** here — visual confirmation these are two different mechanisms, not two names for the same thing.
+
 ## Part 2 — Read the encryption configuration
 
 1. Still on the storage account, under **Security + networking**, select **Encryption**.
@@ -55,6 +64,7 @@ This is the chain from the lab's Bicep made visible: identity → role → key a
 Walking through this lab in the portal, you should now be able to:
 
 - **Locate and read a storage account's network firewall rules** in the portal, and distinguish the "reach the account" layer from identity-based access checks.
+- **Find a service-endpoint-backed VNet rule** on the Networking blade, trace it back to the subnet's own service endpoint configuration, and distinguish it visually and conceptually from a private endpoint connection.
 - **Trace a customer-managed key configuration** from the storage account's Encryption blade through to the Key Vault's role assignments, confirming which identity has access and via which role.
 - **Generate a SAS token through the portal UI** and compare its structure to one generated via CLI, recognizing the difference between a key-signed and a user-delegation-signed token.
 - **Find and edit a stored access policy** on a container, and explain why editing the policy is a single point of control over every SAS token issued against it.

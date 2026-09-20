@@ -29,6 +29,9 @@ param allowedClientIp string
 @description('Whether the Key Vault has purge protection enabled. Leave true to see the real-world behavior (a deleted vault cannot be purged early, full stop); set false only if you are redeploying this lab repeatedly and need to free up the vault name quickly during cleanup.')
 param enablePurgeProtection bool = true
 
+var trustedVnetAddressPrefix = '10.50.0.0/24'
+var trustedSubnetAddressPrefix = '10.50.0.0/26'
+
 // Built-in "Key Vault Crypto Service Encryption User" — lets a principal (here,
 // the storage account's own managed identity, not a human) wrap/unwrap keys for
 // encryption-at-rest purposes without granting it broader key management rights.
@@ -60,6 +63,50 @@ resource cmkKey 'Microsoft.KeyVault/vaults/keys@2023-07-01' = {
   properties: {
     kty: 'RSA'
     keySize: 2048
+  }
+  tags: {
+    course: 'AZ-104'
+    lab: 'lab04-storage-security-access'
+  }
+}
+
+// A small VNet whose one subnet has a SERVICE ENDPOINT for Microsoft.Storage —
+// a second, distinct network-ACL mechanism alongside the ipRules above, and a
+// different (older, simpler) mechanism than the private endpoint Lab 11
+// deploys. A service endpoint does NOT give the storage account a private IP
+// address inside this VNet the way Lab 11's private endpoint does — the
+// storage account keeps its normal public endpoint and public IP the whole
+// time. What a service endpoint actually does: it extends this VNet's
+// identity onto Azure's backbone network for the Microsoft.Storage service
+// specifically, so traffic leaving snet-trusted for the storage account's
+// public endpoint gets tagged as "from this VNet/subnet" instead of "from some
+// public IP" — which is what lets the virtualNetworkRules entry below
+// allow-list it by subnet ID rather than by IP address. Traffic still
+// physically traverses the storage account's public endpoint; a service
+// endpoint only changes how that traffic is *identified and authorized*,
+// while a private endpoint changes the network *path* itself.
+resource trustedVnet 'Microsoft.Network/virtualNetworks@2023-09-01' = {
+  name: 'vnet-az104lab04-trusted'
+  location: location
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        trustedVnetAddressPrefix
+      ]
+    }
+    subnets: [
+      {
+        name: 'snet-trusted'
+        properties: {
+          addressPrefix: trustedSubnetAddressPrefix
+          serviceEndpoints: [
+            {
+              service: 'Microsoft.Storage'
+            }
+          ]
+        }
+      }
+    ]
   }
   tags: {
     course: 'AZ-104'
@@ -100,6 +147,15 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
       ipRules: [
         {
           value: allowedClientIp
+          action: 'Allow'
+        }
+      ]
+      // Service endpoint rule — coexists with the IP rule above. Both are
+      // evaluated the same way: an allow-list checked before defaultAction:
+      // Deny kicks in.
+      virtualNetworkRules: [
+        {
+          id: trustedVnet.properties.subnets[0].id
           action: 'Allow'
         }
       ]
@@ -163,6 +219,14 @@ resource storageAccountCmk 'Microsoft.Storage/storageAccounts@2023-05-01' = {
           action: 'Allow'
         }
       ]
+      // Kept identical to the first pass above — networkAcls isn't part of
+      // what this second pass changes, only the encryption block is.
+      virtualNetworkRules: [
+        {
+          id: trustedVnet.properties.subnets[0].id
+          action: 'Allow'
+        }
+      ]
     }
     encryption: {
       keySource: 'Microsoft.Keyvault'
@@ -194,3 +258,4 @@ output storageAccountPrincipalId string = storageAccount.identity.principalId
 output keyVaultName string = keyVault.name
 output keyVaultUri string = keyVault.properties.vaultUri
 output cmkKeyName string = cmkKey.name
+output trustedSubnetId string = trustedVnet.properties.subnets[0].id

@@ -32,16 +32,16 @@ Working outline for the AZ-104 (Microsoft Certified: Azure Administrator Associa
 - How to use this course: watch/read → lab → practice questions, per module — same rhythm as the AZ-900 course
 
 ## Module 2 — Manage Azure Identities and Governance (20–25%)
-**Est. length:** 90–110 min | **Lab/walkthrough:** [Lab 1](../labs/01-custom-rbac-scope/) (custom RBAC roles & scope hierarchy, extends AZ-900 Lab 4), [Lab 2](../labs/02-azure-policy-initiatives/) (policy initiatives & remediation, extends AZ-900 Lab 8), [Lab 3](../labs/03-governance-tags-cost/) (locks, budgets & resource moves, extends AZ-900 Labs 5 and 7)
+**Est. length:** 90–110 min | **Lab/walkthrough:** [Lab 1](../labs/01-custom-rbac-scope/) (custom RBAC roles & scope hierarchy, extends AZ-900 Lab 4), [Lab 2](../labs/02-azure-policy-initiatives/) (policy initiatives & remediation, extends AZ-900 Lab 8), [Lab 3](../labs/03-governance-tags-cost/) (locks, budgets & resource moves, extends AZ-900 Labs 5 and 7), [Lab 15](../labs/15-entra-users-groups-licensing/) (Entra users, groups & licensing — manual + CLI-script delivery, no Bicep)
 
 Structured on the exam's own three sub-objectives:
 
 **Manage Microsoft Entra users and groups**
-- Create users and groups (including bulk creation patterns)
-- Manage user and group properties, group types (security vs. Microsoft 365) and membership rules (assigned vs. dynamic)
-- Manage licenses in Microsoft Entra ID
-- Manage external users (B2B guest access — administering it, vs. AZ-900's conceptual-only treatment)
-- Configure self-service password reset (SSPR) — setup, registration requirements, verification methods
+- Create users and groups (including bulk creation patterns) — **Lab 15**
+- Manage user and group properties, group types (security vs. Microsoft 365) and membership rules (assigned vs. dynamic) — **Lab 15**
+- Manage licenses in Microsoft Entra ID — **Lab 15**
+- Manage external users (B2B guest access — administering it, vs. AZ-900's conceptual-only treatment) — **Lab 15**
+- Configure self-service password reset (SSPR) — setup, registration requirements, verification methods — **Lab 15** (read-only tour; changing tenant-wide SSPR policy is out of scope for a routine repeat of this lab)
 
 **Manage access to Azure resources**
 - Manage built-in Azure roles vs. custom roles (know when a built-in role is insufficient) — **Lab 1**
@@ -65,7 +65,7 @@ Structured on the exam's own three sub-objectives:
 - [Secure your Azure resources with Azure RBAC](https://learn.microsoft.com/training/modules/secure-azure-resources-with-rbac/)
 - [Allow users to reset their password with Microsoft Entra self-service password reset](https://learn.microsoft.com/training/modules/allow-users-reset-their-password/)
 
-**Coverage gap closed by this repo's labs:** resource locks, tags, cost-management alerts/budgets/Advisor, and management-group configuration are all explicit exam sub-bullets with no dedicated Learn module — Labs 1–3 close that gap with direct hands-on exercises rather than relying on "core architectural components"'s glancing coverage.
+**Coverage gap closed by this repo's labs:** resource locks, tags, cost-management alerts/budgets/Advisor, and management-group configuration are all explicit exam sub-bullets with no dedicated Learn module — Labs 1–3 close that gap with direct hands-on exercises rather than relying on "core architectural components"'s glancing coverage. Separately, "Manage Microsoft Entra users and groups" had **zero hands-on lab coverage at all** until Lab 15 — Lab 1 only exercises the RBAC sub-objective and assumes a user principal already exists; Lab 15 is where that principal, and the rest of this sub-objective (bulk creation, dynamic groups, licensing, B2B guests, SSPR), actually get built by hand.
 
 ## Module 3 — Implement and Manage Storage (15–20%)
 **Est. length:** 70–90 min | **Lab/walkthrough:** [Lab 4](../labs/04-storage-security-access/) (SAS, network rules & CMK encryption) and [Lab 5](../labs/05-storage-lifecycle-protection/) (lifecycle management, versioning & object replication) — both extend AZ-900 Lab 2 to configuration/security depth
@@ -75,7 +75,7 @@ Structured on the exam's own three sub-objectives:
 - Create and use shared access signature (SAS) tokens (account SAS vs. service SAS vs. user delegation SAS) — **Lab 4**
 - Configure stored access policies — **Lab 4**
 - Manage storage account access keys (rotation, regeneration) — **Lab 4**
-- Configure identity-based (Entra ID) access for Azure Files
+- Configure identity-based (Entra ID) access for Azure Files — **Lab 5** (extended: Microsoft Entra Kerberos authentication configured on the storage account)
 
 **Configure and manage storage accounts**
 - Create and configure storage accounts (performance tiers, account kinds)
@@ -104,7 +104,7 @@ Structured on the exam's own three sub-objectives:
 **Automate deployment with ARM templates or Bicep files**
 - Interpret an ARM template or Bicep file; modify an existing one of each
 - Deploy resources using an ARM template or Bicep file
-- Export a deployment as an ARM template, or convert an ARM template to Bicep
+- Export a deployment as an ARM template, or convert an ARM template to Bicep — **Lab 6** (manual task: `az group export` + `az bicep decompile`, plus Incremental vs. Complete deployment mode)
 - Direct callback to this course's own Bicep-first labs (already used throughout the AZ-900 course and continued in every AZ-104 lab) and to Module 1's ARM-template prerequisite module
 
 **Create and configure virtual machines**
@@ -123,7 +123,7 @@ Structured on the exam's own three sub-objectives:
 - Manage sizing and scaling for both Container Instances and Container Apps — **Lab 8**
 
 **Create and configure Azure App Service**
-- Provision an App Service plan; configure scaling for it — **Lab 9**
+- Provision an App Service plan; configure scaling for it — **Lab 9** (extended: scale up/SKU and scale out/instance count, both hands-on)
 - Create an App Service — **Lab 9**
 - Configure certificates and TLS for an App Service — **Lab 9** (manual task — requires an owned domain)
 - Map an existing custom DNS name to an App Service — **Lab 9** (manual task)
@@ -153,7 +153,7 @@ Structured on the exam's own three sub-objectives:
 **Configure secure access to virtual networks**
 - Create and configure network security groups (NSGs) and application security groups; evaluate effective security rules — direct callback to AZ-900 Lab 3, extended in **Lab 11**
 - Implement Azure Bastion — **Lab 11**
-- Configure service endpoints for Azure PaaS
+- Configure service endpoints for Azure PaaS — **Lab 4** (extended: a VNet rule backed by a `Microsoft.Storage` service endpoint, contrasted directly against Lab 11's private endpoint)
 - Configure private endpoints for Azure PaaS (ties back to Module 4's App Service networking settings) — **Lab 11**
 
 **Configure name resolution and load balancing**
@@ -179,23 +179,23 @@ Structured on the exam's own three sub-objectives:
 **Coverage gap closed by this repo's labs:** Azure Bastion and private endpoints are named exam sub-bullets without a standalone module in this Learn path — Lab 11 builds both directly.
 
 ## Module 6 — Monitor and Maintain Azure Resources (10–15%)
-**Est. length:** 70–90 min | **Lab/walkthrough:** [Lab 13](../labs/13-monitor-log-analytics/) (Log Analytics, diagnostic settings & KQL, extends AZ-900 Lab 7), [Lab 14](../labs/14-backup-recovery/) (Recovery Services vault, VM backup/restore & optional Site Recovery)
+**Est. length:** 70–90 min | **Lab/walkthrough:** [Lab 13](../labs/13-monitor-log-analytics/) (Log Analytics, diagnostic settings & KQL, extends AZ-900 Lab 7; extended with VM Insights and Connection Monitor manual tasks), [Lab 14](../labs/14-backup-recovery/) (Recovery Services vault + Backup vault, VM backup/restore, backup reports/alerts & optional Site Recovery)
 
 **Monitor resources in Azure**
 - Interpret metrics in Azure Monitor — direct callback to AZ-900 Lab 7
 - Configure log settings (diagnostic settings → Log Analytics workspace) — **Lab 13**
 - Query and analyze logs in Azure Monitor (Kusto Query Language / KQL) — **Lab 13**
 - Set up alert rules, action groups, and alert processing rules — **Lab 13**
-- Configure and interpret monitoring of VMs, storage accounts, and networks using Azure Monitor Insights
-- Use Azure Network Watcher and Connection Monitor (the configuration depth that Module 5's orientation-only Network Watcher module doesn't cover) — **Lab 13** (manual task)
+- Configure and interpret monitoring of VMs, storage accounts, and networks using Azure Monitor Insights — **Lab 13** (extended, manual task: VM Insights)
+- Use Azure Network Watcher and Connection Monitor (the configuration depth that Module 5's orientation-only Network Watcher module doesn't cover) — **Lab 13** (extended, manual task: Connection Monitor, alongside the existing flow-log task)
 
 **Implement backup and recovery**
-- Create a Recovery Services vault vs. an Azure Backup vault — when each applies — **Lab 14**
+- Create a Recovery Services vault vs. an Azure Backup vault — when each applies — **Lab 14** (extended: both vault types now built in Bicep, side by side)
 - Create and configure a backup policy — **Lab 14**
 - Perform backup and restore operations using Azure Backup — **Lab 14** (manual task)
 - Configure Azure Site Recovery for Azure resources — **Lab 14** (optional, manual, capstone-style)
 - Perform a failover to a secondary region using Site Recovery — **Lab 14** (optional, manual, capstone-style)
-- Configure and interpret reports and alerts for backups
+- Configure and interpret reports and alerts for backups — **Lab 14** (extended, manual task)
 
 **Source Microsoft Learn modules** ([AZ-104: Monitor and back up Azure resources](https://learn.microsoft.com/en-us/training/paths/az-104-monitor-backup-resources/)):
 - [Introduction to Azure Backup](https://learn.microsoft.com/training/modules/intro-to-azure-backup/)
@@ -203,7 +203,7 @@ Structured on the exam's own three sub-objectives:
 - [Introduction to Azure Monitor](https://learn.microsoft.com/training/modules/intro-to-azure-monitor/)
 - [Improve incident response with Azure Monitor alerts](https://learn.microsoft.com/training/modules/incident-response-with-alerting-on-azure/)
 
-**Coverage gap closed by this repo's labs:** Log Analytics/KQL and the Recovery Services vault's hard-delete-blocking behavior (no dedicated Learn module covers the latter) are both exercised directly in Labs 13–14. Azure Site Recovery and failover remain the one sub-bullet this repo treats as optional/manual-only rather than a routine repeatable lab, given the cost and cross-region setup involved — see Lab 14's README for why.
+**Coverage gap closed by this repo's labs:** Log Analytics/KQL and the Recovery Services vault's hard-delete-blocking behavior (no dedicated Learn module covers the latter) are both exercised directly in Labs 13–14. Azure Site Recovery and failover remain the one sub-bullet this repo treats as optional/manual-only rather than a routine repeatable lab, given the cost and cross-region setup involved — see Lab 14's README for why. A later coverage-audit pass also closed three sub-bullets that had no lab reference at all: VM Insights and Connection Monitor (Lab 13, both manual tasks — VM Insights needs an existing VM as a target, Connection Monitor is genuinely a portal/CLI-only configuration), and the Recovery Services vault vs. Backup vault distinction plus backup reports/alerts (Lab 14 — the Backup vault and its blob backup policy are now real Bicep resources, not just prose).
 
 ## Module 7 — Full Practice Exam + Wrap-Up
 **Est. length:** 90+ min | **Lab/walkthrough:** none (assessment module); optional capstone exercise
@@ -218,13 +218,13 @@ Structured on the exam's own three sub-objectives:
 
 ## Labs and walkthroughs built
 
-All 14 labs are built — see [`../labs/`](../labs/) for the Bicep + README pairs and [`../walkthroughs/`](../walkthroughs/) for the matching portal-first walkthroughs. Every lab's README states its real cost plainly; several Module 4/5 labs are genuinely billable by the hour (VMs, App Service Standard tier, Azure Bastion) unlike most of the AZ-900 course — clean up promptly after each demo.
+All 15 labs are built — see [`../labs/`](../labs/) for the Bicep + README pairs (Lab 15 is manual + CLI-script delivery, with `create-users.sh` in place of a `main.bicep`) and [`../walkthroughs/`](../walkthroughs/) for the matching portal-first walkthroughs. Every lab's README states its real cost plainly; several Module 4/5 labs are genuinely billable by the hour (VMs, App Service Standard tier, Azure Bastion) unlike most of the AZ-900 course — clean up promptly after each demo.
 
 ## Open items before recording video content
 
 - [x] Domain weightings and exam format verified against Microsoft's official study guide (April 17, 2026 revision, checked September 2026).
 - [x] All 32 modules across the six official AZ-104 Learn paths enumerated and mapped to the five weighted exam domains.
-- [x] All 14 hands-on labs built (Bicep + README + portal walkthrough each) — see "Labs and walkthroughs built" above.
+- [x] All 15 hands-on labs built (Bicep + README + portal walkthrough each, except Lab 15 which is manual + CLI-script delivery) — see "Labs and walkthroughs built" above.
 - [ ] Pull full unit-level content (text, diagrams, knowledge-check questions) from all 32 Learn modules for the actual chapter drafts and to source diagrams for a `Learn Images/` folder, the way AZ-900's `Learn Images/` was built — not yet started.
 - [ ] Confirm current AZ-104 exam duration/question count directly on the Pearson VUE scheduling page immediately before publishing — the public study guide doesn't state either.
 - [ ] Practice-exam question bank (Module 7) — not yet started; should mirror the AZ-900 bank's domain-weighted approach, reweighted 20-25/15-20/20-25/15-20/10-15.
@@ -244,7 +244,7 @@ All 14 labs are built — see [`../labs/`](../labs/) for the Bicep + README pair
 **What this review found (real content gaps between the Learn paths and the official exam skill list) — and how this repo's labs close each one:**
 - Module 2: resource locks, resource tagging, cost-management alerts/budgets/Advisor recommendations, and management-group configuration are named exam sub-bullets with no dedicated Learn module — closed by Labs 1–3.
 - Module 4: Azure Container Registry and Azure Container Apps are named exam sub-bullets; the compute path's only container module covers Container Instances alone — closed by Lab 8.
-- Module 5: Azure Bastion, service endpoints, and private endpoints for Azure PaaS are named exam sub-bullets with no dedicated module in the 8-module networking path — closed by Lab 11 (Bastion, private endpoints); service endpoints remain conceptual-only for now.
+- Module 5: Azure Bastion, service endpoints, and private endpoints for Azure PaaS are named exam sub-bullets with no dedicated module in the 8-module networking path — closed by Lab 11 (Bastion, private endpoints) and, as of a later coverage-audit pass, Lab 4 (a service-endpoint-backed VNet rule on the storage account, contrasted directly against Lab 11's private endpoint).
 - Module 6: Azure Site Recovery and cross-region failover are named exam sub-bullets absent from the 4-module Learn path — Lab 14 covers this as an explicitly optional, manual-only capstone section rather than a routine repeatable exercise, given the real cost and cross-region setup involved.
 
 **Considered and deliberately not adopted:**

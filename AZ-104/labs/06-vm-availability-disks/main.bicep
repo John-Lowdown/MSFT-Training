@@ -21,13 +21,20 @@ param adminPublicKey string
 @description('VM size — B1s is the cheapest widely-available Linux burstable size, appropriate for a demo, not production')
 param vmSize string = 'Standard_B1s'
 
-@description('Availability zone this VM is pinned to. A VM can be in a zone OR an availability set, never both — see the comment above the VM resource.')
+@description('Availability zone this VM is pinned to. Only used when deploymentTarget is "zone". A VM can be in a zone OR an availability set, never both — see the comment above the VM resource.')
 @allowed([
   '1'
   '2'
   '3'
 ])
 param vmZone string = '1'
+
+@description('Which placement strategy to deploy the VM with. "zone" (the default, matching this lab\'s original behavior/cost) pins the VM to the availability zone in vmZone. "availabilitySet" instead creates an availability set and places the VM in it — the two are mutually exclusive on a single VM, which is the entire point of this parameter.')
+@allowed([
+  'zone'
+  'availabilitySet'
+])
+param deploymentTarget string = 'zone'
 
 @description('CIDR allowed to reach SSH (22). Defaults to any address for lab simplicity — in the real world, scope this to your own IP.')
 param sshSourceAddressPrefix string = '*'
@@ -136,25 +143,62 @@ resource nic 'Microsoft.Network/networkInterfaces@2023-09-01' = {
 }
 
 // AVAILABILITY ZONE vs. AVAILABILITY SET — a VM can use one or the other, never both.
-// An availability zone (what this VM uses, via the `zones` property below) places the VM
-// in a physically separate datacenter facility within the region — its own power, cooling,
-// and network, protecting against a whole-datacenter failure. An availability set instead
+// An availability zone (deploymentTarget: 'zone', the default, via the `zones` property
+// below) places the VM in a physically separate datacenter facility within the region —
+// its own power, cooling, and network, protecting against a whole-datacenter failure. An
+// availability set (deploymentTarget: 'availabilitySet', the resource below) instead
 // spreads VMs across fault domains (separate racks/power/network within ONE datacenter) and
 // update domains (groups that aren't patched/rebooted simultaneously during planned
 // maintenance) — it protects against a single rack or host failing, not a datacenter-level
 // outage. They are mutually exclusive on the same VM because they solve problems at two
 // different blast radii, and the exam tests that distinction directly rather than testing
 // either concept in isolation.
+//
+// Only created when deploymentTarget is 'availabilitySet' — this is the Bicep resource-level
+// `if` condition, not a manually-toggled comment. 2 fault domains / 5 update domains are the
+// typical defaults for a region that supports the standard FD/UD maximums (some regions cap
+// fault domains at 2; 5 update domains is the platform default when none is specified).
+// sku.name: 'Aligned' is the modern, managed-disk-compatible availability set SKU — the
+// older 'Classic' SKU does NOT support managed disks at all, which is itself a testable fact:
+// an availability set created without specifying 'Aligned' defaults to 'Classic' and cannot
+// host the Premium_LRS managed disk this VM uses below.
+resource avSet 'Microsoft.Compute/availabilitySets@2024-03-01' = if (deploymentTarget == 'availabilitySet') {
+  name: 'avail-az104lab06'
+  location: location
+  sku: {
+    name: 'Aligned'
+  }
+  properties: {
+    platformFaultDomainCount: 2
+    platformUpdateDomainCount: 5
+  }
+  tags: {
+    course: 'AZ-104'
+    lab: 'lab06-vm-availability-disks'
+  }
+}
+
 resource vm 'Microsoft.Compute/virtualMachines@2024-03-01' = {
   name: 'vm-az104lab06'
   location: location
-  zones: [
+  // A VM can't have both `zones` and `properties.availabilitySet` set at once — Azure
+  // rejects the deployment outright. Bicep's ternary + `null` is the standard pattern for
+  // this exact mutual exclusivity: assigning `null` to a property omits it from the
+  // generated ARM template entirely, rather than sending an empty/invalid value. Only one of
+  // `zones` below and `properties.availabilitySet` further down ever actually renders.
+  zones: deploymentTarget == 'zone' ? [
     vmZone
-  ]
+  ] : null
   properties: {
     hardwareProfile: {
       vmSize: vmSize
     }
+    // The other half of the mutual-exclusivity pattern described above — only renders when
+    // deploymentTarget is 'availabilitySet', referencing the conditional avSet resource
+    // declared earlier in this file.
+    availabilitySet: deploymentTarget == 'availabilitySet' ? {
+      id: avSet.id
+    } : null
     // Encrypts the VM's temp disk, OS disk cache, and data disk caches at the host level.
     // This is separate from (and complementary to) Azure Disk Encryption, which encrypts
     // the OS itself via BitLocker/dm-crypt inside the guest — not this lab's focus, just
@@ -207,12 +251,14 @@ resource vm 'Microsoft.Compute/virtualMachines@2024-03-01' = {
   tags: {
     course: 'AZ-104'
     lab: 'lab06-vm-availability-disks'
-    availabilityZone: vmZone
+    availabilityZone: deploymentTarget == 'zone' ? vmZone : 'none (availability set)'
   }
 }
 
 output vmName string = vm.name
 output publicIpAddress string = publicIp.properties.ipAddress
 output sshCommand string = 'ssh ${adminUsername}@${publicIp.properties.ipAddress}'
-output assignedZone string = vmZone
+output deploymentTarget string = deploymentTarget
+output assignedZone string = deploymentTarget == 'zone' ? vmZone : ''
+output availabilitySetName string = deploymentTarget == 'availabilitySet' ? avSet.name : ''
 output osDiskSku string = vm.properties.storageProfile.osDisk.managedDisk.storageAccountType

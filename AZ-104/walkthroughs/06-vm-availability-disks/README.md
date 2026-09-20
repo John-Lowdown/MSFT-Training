@@ -44,6 +44,18 @@ This is the zone you set with the `vmZone` parameter at deploy time (default `1`
 2. Confirm the attached NIC, its private IP, and the public IP address (`pip-az104lab06`).
 3. Click into the **Network security group** shown here to confirm the single inbound rule (`Allow-SSH-Inbound`) and its source address scope — `*` by default, the same "never ship this to production" default called out in AZ-900 Lab 9.
 
+## Part 6 — Compare an availability-set deployment (optional)
+
+Only relevant if you redeployed this lab with `--parameters deploymentTarget=availabilitySet` (see the lab README's Deploy section — this replaces the zone-based VM, it doesn't add a second one).
+
+1. In the portal's top search bar, search for **avail-az104lab06** and open it directly — this is the availability set resource itself, not something you'll find nested under the VM.
+2. On its **Overview** page, confirm **Fault domains: 2** and **Update domains: 5**, and note the **SKU** listed as **Aligned**.
+
+![Availability set overview — fault domain count, update domain count, and Aligned SKU, with the VM listed under it](images/az104-item48-availabilityset-overview-REQUIRED.png)
+
+3. Scroll down to **Virtual machines** on this same blade and confirm `vm-az104lab06` is listed as a member.
+4. Now go back to the VM's own **Overview** page (Part 1) and compare: there is no zone field here at all, in contrast to the zone-based deployment where a zone number sits right next to **Region**. That absence is itself the tell — an availability-set VM simply doesn't carry a zone property, because the two placement mechanisms are mutually exclusive.
+
 ## What you learned
 
 Walking through this lab in the portal, you should now be able to:
@@ -53,3 +65,4 @@ Walking through this lab in the portal, you should now be able to:
 - **Find where encryption-at-host is surfaced in the portal** and explain why it's a different control, in a different place, from Azure Disk Encryption.
 - **Recognize the VM Size blade's filtered list** as the same hardware-cluster constraint that governs `az vm resize` from the CLI.
 - **Trace a VM's network stack** — NIC, public IP, and NSG — back to the individual Bicep resources that created them.
+- **Locate an availability set's own resource blade** (fault domains, update domains, member VMs) and contrast it with a zone-based VM's Overview page, which carries no availability-set information at all.

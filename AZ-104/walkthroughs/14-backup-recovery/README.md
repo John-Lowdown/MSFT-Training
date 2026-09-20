@@ -1,4 +1,4 @@
-# Walkthrough — Azure Backup: Recovery Services Vault & VM Restore (Lab 14)
+# Walkthrough — Azure Backup: Recovery Services Vault, Backup Vault & VM Restore (Lab 14)
 
 A guided, portal-first walkthrough of what [Lab 14](../../labs/14-backup-recovery/) deploys, plus the manual backup/restore/Site Recovery tasks that make up most of this lab. The lab README covers the Bicep deploy/verify/cleanup commands and the CLI equivalents — this walkthrough is for clicking through the vault and its wizards so "protected item" and "restore point" stop being terms and become things you've actually created and clicked through.
 
@@ -62,6 +62,27 @@ Only do this part if you've read the lab README's warning about it first: it nee
 6. Pick a recovery point, then **Commit** to actually bring up the failed-over VM in the target region.
 7. When you're done exploring, tear this down deliberately: disable replication from the **Replicated items** page, and delete the failed-over VM and its disks in the target region. Neither of those is touched by `rg-az104-lab14`'s resource group delete.
 
+## Part 6 — The Backup vault and its blob backup policy
+
+1. Back in your resource group (`rg-az104-lab14`), click into **bv-az104lab14** — a separate resource from `rsv-az104lab14`, not a tab or blade inside it.
+2. On **Overview**, note the resource type shown: `Microsoft.DataProtection/backupVaults`. Compare this page's layout to the Recovery Services vault's Overview from Part 1 — same general idea (a vault waiting for something to protect), genuinely different portal experience.
+3. In the left-hand menu, under **Manage**, select **Backup policies**.
+4. Open `policy-az104lab14-blob` and look at its **Retention rule** — a single rule with a delete-after duration, and notably no backup *schedule* the way the Recovery Services vault's daily policy has one. That absence is the point: blob operational backup runs continuously in the background rather than on a fixed schedule, so there's nothing to schedule in the policy.
+5. If you did manual task (e) and actually protected a storage account, check **Backup instances** (under **Manage**) to see it listed, and confirm the vault's **Identity** (under **Settings**) shows a system-assigned managed identity — that's what carries the RBAC role you granted it.
+
+## Part 7 — Backup reports and alerts, if you did manual task (f)
+
+Skip this part if you didn't configure Backup Center's reporting/alerting from the lab README's manual tasks.
+
+1. Search for **Backup Center** in the portal.
+2. Select **Backup Reports**. If this is the first time reporting has been configured, you'll be prompted to select a Log Analytics workspace as the reporting sink — confirm it points at `law-az104lab13` (or whichever workspace you configured).
+3. Once reports have had time to accumulate data, this view shows backup job success/failure trends, storage consumed, and policy compliance across every vault in scope — not just the ones in this lab's resource group.
+4. Select **Alerts** (also under Backup Center) to see the unified, cross-vault alert view. Confirm you can see any default backup-failure alert, or the one you created, and that it's wired to an action group.
+
+![Backup Center — Backup Reports overview with job-success trend and Alerts list showing a backup-failure alert wired to an action group](images/az104-item46-backupcenter-reports-alerts-REQUIRED.png)
+
+5. Compare this to the per-vault **Backup alerts** blade on `rsv-az104lab14` (under **Monitoring**) — the same underlying alerts, just scoped to one vault instead of shown across all of them. Knowing both entry points exist is worth more than memorizing one.
+
 ## What you learned
 
 Walking through this lab in the portal, you should now be able to:
@@ -72,3 +93,5 @@ Walking through this lab in the portal, you should now be able to:
 - **Walk a VM restore wizard's Restore Configuration tab** and explain the blast-radius difference between Create new, Replace existing, and Restore disks only.
 - **Explain, from having seen both wizards, why Backup and Site Recovery are different features sharing one vault type** — same-region point-in-time recovery versus cross-region disaster-recovery replication.
 - **Recognize Site Recovery's replication and failover workflow as a deliberately heavier, optional exercise** — not something to casually repeat — and know to tear down both the replication and any committed failover VM afterward.
+- **Locate a Backup vault's Overview and its blob backup policy**, and point at the specific thing that's different about a blob policy versus a VM policy — no schedule, just a retention rule, because operational backup runs continuously.
+- **Find Backup Center's Reports and Alerts views** and explain what they add over looking at one vault's backup jobs individually.

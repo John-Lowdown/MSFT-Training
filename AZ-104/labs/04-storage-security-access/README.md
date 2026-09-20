@@ -6,7 +6,7 @@
 
 ## What you'll build
 
-A storage account locked down with a **network ACL** (`defaultAction: Deny` plus one allow-listed IP — yours), and its data protected at rest with a **customer-managed key (CMK)** held in a **Key Vault** with RBAC authorization and purge protection enabled. The storage account's own **system-assigned managed identity** is granted the built-in **Key Vault Crypto Service Encryption User** role on the vault so it can use the key. AZ-900 Lab 2 taught storage redundancy; this lab goes one level deeper into who and what can actually get to your data, and how.
+A storage account locked down with a **network ACL** (`defaultAction: Deny` plus one allow-listed IP — yours — plus a **VNet rule** backed by a **service endpoint** on a small trusted subnet), and its data protected at rest with a **customer-managed key (CMK)** held in a **Key Vault** with RBAC authorization and purge protection enabled. The storage account's own **system-assigned managed identity** is granted the built-in **Key Vault Crypto Service Encryption User** role on the vault so it can use the key. AZ-900 Lab 2 taught storage redundancy; this lab goes one level deeper into who and what can actually get to your data, and how.
 
 ## Deploy
 
@@ -40,9 +40,15 @@ az storage account show --name $STORAGE_NAME --resource-group rg-az104-lab04 \
   --query "encryption.{keySource:keySource, keyVaultUri:keyVaultProperties.keyVaultUri, keyName:keyVaultProperties.keyName}" -o json
 
 az role assignment list --scope $(az keyvault show --name $KEYVAULT_NAME --query id -o tsv) -o table
+
+az network vnet subnet show \
+  --resource-group rg-az104-lab04 --vnet-name vnet-az104lab04-trusted --name snet-trusted \
+  --query "serviceEndpoints" -o json
 ```
 
-In the portal: **rg-az104-lab04 → the storage account → Networking** to see the Deny default and your IP rule, and **→ Encryption** to see the customer-managed key pointing at your vault and key.
+That last command should show one entry with `service: Microsoft.Storage` — confirmation that the subnet itself, not just the storage account, is holding up its end of the VNet rule.
+
+In the portal: **rg-az104-lab04 → the storage account → Networking** to see the Deny default, your IP rule, and the `vnet-az104lab04-trusted`/`snet-trusted` VNet rule listed alongside it, and **→ Encryption** to see the customer-managed key pointing at your vault and key.
 
 ## Manual tasks (can't be done by Bicep)
 
@@ -110,6 +116,7 @@ This only works when purge protection was off. If it was on, there is no early-p
 
 ## Lecture talking points
 
+- **Service endpoint vs. private endpoint — a frequently-confused, frequently-tested pair.** This lab's VNet rule uses a **service endpoint**: `snet-trusted` gets a `Microsoft.Storage` service endpoint, which extends that subnet's identity onto Azure's backbone so traffic to the storage account's *public* endpoint gets recognized as "from this VNet" and can be allow-listed by a network rule. The storage account never gets a private IP address inside the VNet, and the public endpoint stays in play the whole time. Lab 11's **private endpoint** is a different mechanism entirely: it puts an actual NIC with a private IP for the storage account inside a VNet subnet, so traffic never touches the public endpoint at all — DNS for the storage account name resolves to that private IP instead. Concretely: service endpoint = same public path, traffic tagged/authorized by source VNet; private endpoint = a different path altogether, no public traversal, no public endpoint involved for that access route. The exam expects you to know which one actually removes the public endpoint from the picture (private endpoint) and which one is the older, lighter-weight option that still leaves it exposed but access-controlled (service endpoint).
 - **Network rules and SAS/RBAC are two independent, stackable layers.** A network ACL (`defaultAction: Deny` + allow-listed IPs/VNets) answers "can this request even reach the account." A SAS token, a stored access policy, or an RBAC role assignment answers "is this specific, already-arrived request authorized." Tightening one does nothing to the other — a perfectly valid SAS token is still useless from a blocked IP, and a request from an allowed IP still needs a valid credential.
 - **Why enabling CMK needs a role assignment at all.** This isn't a human requesting access — it's the storage account's own **system-assigned managed identity** asking Key Vault to wrap/unwrap the encryption key on its behalf. Any resource that authenticates to another resource needs an identity and a role grant just like a person would; this lab's Bicep makes that chain explicit (storage account → system-assigned identity → role assignment on the vault → CMK encryption config).
 - **Account SAS vs. service SAS vs. user-delegation SAS — a three-tier scope/security tradeoff.** Account SAS (broadest, key-signed, can span services) → service SAS (narrower, still key-signed) → user-delegation SAS (Entra-ID-backed, no storage key involved, most secure, the modern recommendation). The exam tests which tier is "most secure" and why — no shared key means no key to leak.
@@ -122,6 +129,7 @@ This only works when purge protection was off. If it was on, there is no early-p
 By completing this lab, you can now:
 
 - Configure a storage account's **network ACLs** to deny by default and allow only specific IPs, and explain that this is independent of identity-based access controls.
+- Configure a **VNet rule backed by a service endpoint**, and explain precisely how it differs from a private endpoint (no private IP on the storage account, public endpoint still in play, traffic identified by source VNet rather than rerouted).
 - Wire up **customer-managed key encryption** end to end: a system-assigned managed identity, a role assignment granting that identity access to a vault key, and the storage account's encryption settings pointing at the result.
 - Generate and compare **account, service, and user-delegation SAS tokens**, and state which is most secure and why.
 - Create a **stored access policy** and issue a SAS against it, and explain why that's the only way to revoke many outstanding tokens at once.

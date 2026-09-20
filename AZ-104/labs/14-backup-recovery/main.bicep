@@ -1,8 +1,11 @@
-// AZ-104 Lab 14: Azure Backup — Recovery Services Vault & VM Restore
+// AZ-104 Lab 14: Azure Backup — Recovery Services Vault, Backup Vault & VM Restore
 // Domain: Monitor and maintain Azure resources — Implement backup and recovery
-// Cost: $0 for this deploy — the vault and backup policy carry no charge on their own.
-//       Cost only shows up if you do the optional manual task of enabling backup on a real
-//       VM: roughly a couple of cents per GB-month of backed-up data, cheap for a short demo.
+// Cost: $0 for this deploy — both vault types and both backup policies carry no charge on
+//       their own; nothing is actually protecting data yet, just defining where/how it would
+//       be if you enabled it. Cost only shows up if you do the optional manual task of
+//       enabling backup on a real VM (roughly a couple of cents per GB-month of backed-up
+//       data) or actually protecting a storage account with the blob backup policy below
+//       (similarly small, billed on backed-up data volume) — both cheap for a short demo.
 //       The optional Site Recovery capstone task is NOT cheap if left running — see the
 //       README's manual tasks section before attempting it.
 //
@@ -77,6 +80,100 @@ resource dailyVmPolicy 'Microsoft.RecoveryServices/vaults/backupPolicies@2024-04
   }
 }
 
+// ---------------------------------------------------------------------------
+// Azure Backup vault (Microsoft.DataProtection/backupVaults) — a SEPARATE
+// resource type from the Recovery Services vault above, not a newer version
+// of the same thing. Different resource provider namespace
+// (Microsoft.DataProtection vs. Microsoft.RecoveryServices), different
+// underlying backup stack, different portal experience. "Azure Backup" built
+// on a Backup vault is the direction Microsoft is consolidating newer
+// workload types toward — blobs, managed disks, PostgreSQL flexible server,
+// and a growing list of others — but a Recovery Services vault remains what
+// VM backup (and Site Recovery) actually use, which is exactly why this lab
+// now deploys both rather than replacing one with the other. This is the
+// literal "vault vs. vault" distinction the exam's own skill list names.
+resource backupVault 'Microsoft.DataProtection/backupVaults@2023-11-01' = {
+  name: 'bv-az104lab14'
+  location: location
+  // A system-assigned identity is what the vault later uses to reach the
+  // resource it's protecting. Actually protecting a specific storage
+  // account additionally requires granting this identity the
+  // "Storage Account Backup Contributor" role on that account — a
+  // data-plane/target-specific RBAC step, so (like enabling VM protection
+  // above) it's left as a manual task rather than baked in here.
+  identity: {
+    type: 'SystemAssigned'
+  }
+  properties: {
+    // LocallyRedundant is the minimal/cheapest datastore redundancy for a
+    // demo vault; GeoRedundant is the other common option. datastoreType
+    // 'VaultStore' is the operational-tier datastore blob backup uses.
+    storageSettings: [
+      {
+        datastoreType: 'VaultStore'
+        type: 'LocallyRedundant'
+      }
+    ]
+  }
+  tags: {
+    course: 'AZ-104'
+    lab: 'lab14-backup-recovery'
+  }
+}
+
+// A Backup vault's policy is a separate resource type AND a genuinely more
+// complex schema than the Recovery Services vault's AzureIaasVM policy
+// above. This one is written for BLOB backup specifically — operational
+// (continuous, point-in-time-restore) backup of blob storage, the
+// flagship, simplest workload type for the newer Backup vault.
+//
+// CONFIDENCE NOTE: the backupVault resource type/API version and the
+// storageSettings shape above are well-documented and used here with
+// confidence. The policyRules structure below — property names like
+// `objectType`, `sourceDataStore`, `dataStoreType`, `AbsoluteDeleteOption`,
+// and the fact that a minimal blob-operational-backup policy needs only a
+// retention rule with NO scheduled trigger (because blob operational
+// backup runs continuously in the background rather than on a schedule the
+// way VM backup does) — reflects the documented shape as of this file's
+// authoring, but this corner of the Microsoft.DataProtection schema is
+// genuinely more obscure than the rest of this template and has shifted
+// between API versions before. Run `az bicep build --file main.bicep` and,
+// ideally, `az deployment group validate` against a real subscription
+// before treating this policy resource as authoritative — don't take these
+// property names on faith the way you safely can for the rest of this file.
+resource blobBackupPolicy 'Microsoft.DataProtection/backupVaults/backupPolicies@2023-11-01' = {
+  parent: backupVault
+  name: 'policy-az104lab14-blob'
+  properties: {
+    objectType: 'BackupPolicy'
+    datasourceTypes: [
+      'Microsoft.Storage/storageAccounts/blobServices'
+    ]
+    policyRules: [
+      {
+        name: 'Default'
+        objectType: 'AzureRetentionRule'
+        isDefault: true
+        lifecycles: [
+          {
+            deleteAfter: {
+              objectType: 'AbsoluteDeleteOption'
+              duration: 'P${retentionDays}D'
+            }
+            sourceDataStore: {
+              dataStoreType: 'OperationalStore'
+              objectType: 'DataStoreInfoBase'
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
+
 output vaultName string = vault.name
 output vaultId string = vault.id
 output backupPolicyName string = dailyVmPolicy.name
+output backupVaultName string = backupVault.name
+output backupVaultId string = backupVault.id
+output blobBackupPolicyName string = blobBackupPolicy.name

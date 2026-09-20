@@ -50,6 +50,16 @@ This is the payoff moment for two lab resources that are otherwise just settings
 
 3. Note that this share has no relationship whatsoever to anything in Parts 1–4 — it's here purely to show that Azure Files lives in the same account as Blob Storage without the two services interacting.
 
+## Part 6 — Read the identity-based access configuration
+
+1. On the **source** storage account, under **Data storage**, select **File shares**, then open `lab05share`.
+2. In the share's left menu, select **Configuration** (or, at the storage-account level, **Data storage → File shares → Active Directory** on some portal versions — the exact blade name has shifted across portal updates, so if one path doesn't show it, try the other).
+3. Confirm **Identity-based access** shows **Microsoft Entra Kerberos** as the configured authentication method, matching `directoryServiceOptions: 'AADKERB'` from the template.
+
+![Storage account file share configuration — Identity-based access section showing Microsoft Entra Kerberos as the active authentication method](images/az104-item47-fileshare-identitybasedaccess-aadkerb-REQUIRED.png)
+
+4. Notice what's **not** here: no list of users or groups who can actually connect. That's the RBAC half of this feature — a **Storage File Data SMB Share Contributor/Reader** role assignment on this share or the account — which this lab's template deliberately doesn't add (see the Bicep comment and the lab README's manual-tasks section for why). This blade only proves the storage account side is turned on.
+
 ## What you learned
 
 Walking through this lab in the portal, you should now be able to:
@@ -59,3 +69,4 @@ Walking through this lab in the portal, you should now be able to:
 - **Find and restore a previous blob version** after an overwrite, using the container's version history.
 - **Show deleted blobs and undelete one** within its soft-delete retention window, and state what happens once that window expires.
 - **Locate an Azure Files share's quota and access tier**, and explain why it coexists with, but is unrelated to, the blob-level features in the same storage account.
+- **Read a file share's identity-based access configuration** in the portal, confirm Microsoft Entra Kerberos is active, and explain why the portal doesn't show it as sufficient on its own to grant SMB access.

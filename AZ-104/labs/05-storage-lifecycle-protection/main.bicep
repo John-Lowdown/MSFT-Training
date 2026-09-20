@@ -36,6 +36,29 @@ resource sourceStorageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
     minimumTlsVersion: 'TLS1_2'
     allowBlobPublicAccess: false
     supportsHttpsTrafficOnly: true
+    // Microsoft Entra Kerberos authentication for Azure Files SMB access.
+    // 'AADKERB' is the ARM enum value for Entra-ID-based Kerberos (the option
+    // that doesn't require a domain controller or Entra Domain Services, vs.
+    // 'AD' for on-prem AD DS or 'AADDS' for Entra Domain Services) — this
+    // matches what `az storage account update --enable-files-aadkerb true`
+    // sets under the hood. This property alone only enables the capability on
+    // the storage account side; it does NOT by itself grant any Entra user or
+    // group permission to actually mount the share over SMB. That's a
+    // separate RBAC step — assigning the built-in "Storage File Data SMB
+    // Share Contributor" or "...Reader" role (at the file share or storage
+    // account scope) to whichever Entra identities should connect, the same
+    // role-assignment pattern used for the CMK identity in Lab 04. This lab
+    // deliberately stops short of adding that role assignment — a specific
+    // demo principal for it isn't something this template can default the
+    // way Lab 01's `principalId` param does, since there's no natural
+    // "whoever runs this lab" identity to assign it to without asking for
+    // input the deploy command above doesn't currently require. A real
+    // deployment would add a `Microsoft.Authorization/roleAssignments`
+    // resource here, scoped to `fileShare`, once you know which identities
+    // need SMB access.
+    azureFilesIdentityBasedAuthentication: {
+      directoryServiceOptions: 'AADKERB'
+    }
   }
   tags: {
     course: 'AZ-104'

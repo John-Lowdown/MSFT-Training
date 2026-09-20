@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="../assets/lowdown-lab-logo.png" alt="The Lowdown Lab" width="280">
+</p>
+
 # AZ-104: Azure Administrator — Course Companion Repo
 
 Companion hands-on labs, Bicep templates, and walkthroughs for the AZ-104 (Microsoft Certified: Azure Administrator Associate) study guide and video course — the second course in the AZ-900 → AZ-104 → AZ-305 progression.
@@ -7,10 +11,12 @@ This repo is the free, clonable companion to the paid course — students deploy
 ## Repo structure
 
 ```
-labs/           Fourteen hands-on labs, one per major exam sub-topic. Each has main.bicep +
+labs/           Fifteen hands-on labs, one per major exam sub-topic. Each has main.bicep +
                 README.md with deploy/verify/cleanup commands and instructor talking points.
                 Labs call out a "Manual tasks" section for anything that genuinely can't be
                 expressed as a Bicep resource (SAS tokens, VM resize, slot swaps, restores).
+                Lab 15 is manual + CLI-script delivery only — Entra ID users, groups, and
+                licenses aren't ARM resources, so it has no main.bicep at all.
 walkthroughs/   Guided, click-by-click portal walkthroughs tied to each lab — tour what the
                 Bicep deployed, or (for manual-only topics like Site Recovery) the primary
                 walkthrough of doing the thing by hand.
@@ -35,6 +41,7 @@ docs/           Skills-alignment map (domain -> module -> lab) and supporting re
 | 12 | [Standard Load Balancer & Azure DNS](labs/12-load-balancer-dns/) | Virtual Networking | ~$0 |
 | 13 | [Log Analytics, Diagnostic Settings & KQL](labs/13-monitor-log-analytics/) | Monitor & Maintain | ~$0 |
 | 14 | [Recovery Services Vault, Backup & Restore](labs/14-backup-recovery/) | Monitor & Maintain | ~$0 (more if you opt into the optional Site Recovery section) |
+| 15 | [Microsoft Entra Users, Groups & Licensing](labs/15-entra-users-groups-licensing/) | Identities & Governance | $0 |
 
 Every lab's README states its cost plainly and bolds any real hourly charge — **unlike AZ-900, several of these labs are genuinely billable by the hour** (VMs, a Standard-tier App Service plan, Azure Bastion). Delete each one right after its demo; don't leave Labs 6, 7, 9, or 11 running overnight. Every README ends with a cleanup step in the right order — Lab 2 (policy initiative before definitions), Lab 3 (remove the lock before it blocks a move or delete), and Lab 14 (disable backup protection before the vault can be deleted) each have a real, exam-relevant "this resource actively resists deletion" gotcha baked into cleanup — see those labs' READMEs.
 
@@ -47,6 +54,7 @@ Every lab has a companion portal walkthrough under [`walkthroughs/`](walkthrough
 - [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli) installed and signed in (`az login`)
 - Bicep support comes bundled with a recent Azure CLI (`az bicep install` if prompted)
 - Sufficient Entra ID / subscription permissions to create custom RBAC role definitions and policy assignments (Lab 1–2) — typically Owner or User Access Administrator at the scope you're working in
+- Entra ID **User Administrator** (or Global Administrator) rights for Lab 15's user/group/guest creation — separate from the RBAC/subscription permissions above
 
 ## API versions
 
@@ -59,7 +67,7 @@ Full course (video lectures, slide decks, practice exams) mirrors the AZ-900 cou
 ## Status
 
 - [x] Course outline drafted and aligned against the official AZ-104 study guide (skills measured as of April 17, 2026) and all 32 modules across the six official Learn paths
-- [x] All 14 hands-on labs built — Bicep + README + portal walkthrough each
+- [x] All 15 hands-on labs built — Bicep + README + portal walkthrough each (Lab 15 is manual + CLI-script delivery, so its "Bicep" is a small `create-users.sh` instead of a `main.bicep`)
 - [ ] Study Guide PDF — not part of this repo (lives alongside the course outline source materials)
 - [ ] Video/lecture scripts — not yet started
 - [ ] Practice-exam question bank — not yet started

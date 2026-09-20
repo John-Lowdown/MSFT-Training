@@ -39,6 +39,14 @@ A guided, portal-first walkthrough of what [Lab 09](../../labs/09-app-service-ad
 3. **Backups** will show a prompt to configure a storage account — this is where App Service Backup is wired up, and it requires picking (or creating) a storage account and SAS URL. Also no action needed here.
 4. The point of this part is knowing where these two blades live for when you actually need them later, not configuring either one now.
 
+## Part 5 — Scale up vs. scale out, two separate blades
+
+1. In the left-hand menu, under **Settings**, select **Scale up (App Service plan)**.
+2. This blade is entirely about **SKU/tier** — a grid of pricing tiers (Free/Shared, Basic, Standard, Premium v2/v3, Isolated) with their CPU/memory/feature specs. Confirm your plan currently shows **S1 (Standard)** selected. Don't actually apply a change here unless you intend to pay for it — this lab's cost warning applies double to Premium tiers.
+3. Now select **Scale out (App Service plan)**, a completely different blade in the same **Settings** section.
+4. This one is entirely about **instance count** — a slider or manual instance-count field, with no SKU/tier selector anywhere on the page. Confirm it currently shows **1 instance**.
+5. Look at both blades side by side (open one, note its layout, then switch to the other) and notice neither one lets you do what the other does — Scale up has no instance-count control, Scale out has no tier grid. That separation is the portal reinforcing the same up-vs-out distinction the CLI commands in the lab README's manual tasks demonstrate.
+
 ## What you learned
 
 Walking through this lab in the portal, you should now be able to:
@@ -48,3 +56,4 @@ Walking through this lab in the portal, you should now be able to:
 - **Confirm VNet integration status** on a Web App and trace it back to a subnet delegation on the VNet side.
 - **Explain, from what the Networking blade does and doesn't show, that regional VNet integration is outbound-only.**
 - **Locate the Custom domains and Backups blades** so you know where to configure them later, without needing to complete either step in this lab.
+- **Find the Scale up and Scale out blades as two separate portal experiences** and explain, from what each blade does and doesn't contain, that one changes the plan's tier and the other changes its instance count.
